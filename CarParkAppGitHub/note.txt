@@ -1,0 +1,34 @@
+The code is very dirty(ie not clean) actually so no need force follow it.
+
+And the image path is wrong because i did it inside my pc,
+because image path is wrong, so for every screen need to change all the path(honestly can make one file import
+all the image paths first) (thats why it is dirty) :(
+
+In car Park details all the details havent set into varibles -->agn (thats why it is dirty) :( 
+
+We should use Pixel 3a (random API) in andriod studio, because it is 393x808  dp and figma is 360 x 800 dp so kinda same
+(avoid padding problem)
+(i do it in another same phone actually so got padding problem) (because every phone dp not the same)
+
+Home screen got padding problem.
+And search result suppose can be close down using Animated view and gesture (i havent learn that yet so cant close haha)
+
+Public review image shld not take the exact image from figma (i mean in the code) but shld set borderRadius and resize
+
+And some part abit hard-coded like the setCategory and setSort in bottomPopUp in home screen, maybe need to change (
+
+I also havent do the push up screen when keyboard pop up
+because the sign up screen when keyboard pop up  we cant see anything
+
+drawer pop up customize havent do yet
+
+and some props need to pass around differrent screen havent done yet
+
+Conclusion:
+Code is dirty and need to clean a lot, so no need force follow it, feel free to change it to more dynamic.
+And some onPress logic havent done yet (ie navigate, another navigate, share, search...)
+
+
+
+
+
