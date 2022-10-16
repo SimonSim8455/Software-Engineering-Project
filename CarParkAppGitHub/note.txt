@@ -28,6 +28,8 @@ Conclusion:
 Code is dirty and need to clean a lot, so no need force follow it, feel free to change it to more dynamic.
 And some onPress logic havent done yet (ie navigate, another navigate, share, search...)
 
+Will delete on weds
+
 
 
 
