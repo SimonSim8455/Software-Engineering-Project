@@ -5,7 +5,7 @@ import rel from "../share/RelativeRes";
 
 export default function Buttons({onPressDesCar, onPressCarDes, onPressEnd}){
     
-    const navImg = "D:/STUDY MATERIAL/SC2006/SC2006 Project/CarParkApp/assets/Pictures/navigateButton.png"
+    const navImg = "../../assets/Pictures/navigateButton.png"
     return(
         <View style={styles.container}>
             <View style={styles.content1}>

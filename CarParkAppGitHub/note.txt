@@ -30,6 +30,23 @@ And some onPress logic havent done yet (ie navigate, another navigate, share, se
 
 Will delete on weds
 
+Things to be resolved:
+1. image path details (resolved)
+2. 'carParkdetails' -- details need to set as variables
+3. Home screen got padding problem.
+4. search result suppose can be close down using Animated view and gesture 
+5. Public review image shld not take the exact image from figma (i mean in the code) but shld set borderRadius and resize
+6. some parts (ex. the setCategory and setSort in bottomPopUp in home screen) is hard coded
+7. push up screen when keyboard pop up
+8. drawer pop up customize havent do yet
+9. some props need to pass around differrent screen havent done yet
+10. some onPress logic (ie navigate, another navigate, share, search...)
+
+Comments:
+[resolved]
+1. image path
+2. typo error in 'route/homeStack' -- import StartParking from "../startParking.js/StartParking";
+
 
 
 

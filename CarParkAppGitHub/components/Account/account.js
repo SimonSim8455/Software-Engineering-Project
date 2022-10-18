@@ -6,11 +6,11 @@ import Chart from "./chart";
 
 export default function Account({navigation}){
     const drawerNavigation =navigation;
-    const dummyImg = require("D:/STUDY MATERIAL/SC2006/SC2006 Project/CarParkApp/assets/Pictures/dummyMilkPic.png")
-    const dropDownArrow = require("D:/STUDY MATERIAL/SC2006/SC2006 Project/CarParkApp/assets/Pictures/dropDownArrow2.png")
-    const humanGrayIcon = require("D:/STUDY MATERIAL/SC2006/SC2006 Project/CarParkApp/assets/Pictures/humanGrayIcon.png")
-    const bookGrayIcon = require("D:/STUDY MATERIAL/SC2006/SC2006 Project/CarParkApp/assets/Pictures/bookGrayIcon.png")
-    const arrowRight = require("D:/STUDY MATERIAL/SC2006/SC2006 Project/CarParkApp/assets/Pictures/arrowRightIcon.png")
+    const dummyImg = require("../../assets/Pictures/dummyMilkPic.png")
+    const dropDownArrow = require("../../assets/Pictures/dropDownArrow2.png")
+    const humanGrayIcon = require("../../assets/Pictures/humanGrayIcon.png")
+    const bookGrayIcon = require("../../assets/Pictures/bookGrayIcon.png")
+    const arrowRight = require("../../assets/Pictures/arrowRightIcon.png")
 
     const onPressFavor = () =>{
         drawerNavigation.navigate("Favorite");

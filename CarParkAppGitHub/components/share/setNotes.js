@@ -8,7 +8,7 @@ export default function SetNotes(){
     const pressedUploadPhoto = () =>{
         console.log("location setNotes at parking settings")
     }
-    const uploadPhotoIcon = require("D:/STUDY MATERIAL/SC2006/SC2006 Project/CarParkApp/assets/Pictures/UploadPhotoIcon.png");
+    const uploadPhotoIcon = require("../../assets/Pictures/UploadPhotoIcon.png");
     return(
         <View style={styles.container}>
             <View style={styles.content}>

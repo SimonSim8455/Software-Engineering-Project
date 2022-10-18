@@ -6,13 +6,13 @@ import rel from "../share/RelativeRes";
 export default function PublicReviews(){
     const reviews = [
         {
-            imageSRC:require("D:/STUDY MATERIAL/SC2006/SC2006 Project/CarParkApp/assets/Pictures/personImage.png"),
+            imageSRC:require("../../assets/Pictures/personImage.png"),
             name:"Potato Mash",
             rating:3,
             reviews:"This is so bad, cant cant wait cant wait cant wait to to to try try it it out out out ouch",
         },
         {
-            imageSRC:require("D:/STUDY MATERIAL/SC2006/SC2006 Project/CarParkApp/assets/Pictures/personImage.png"),
+            imageSRC:require("../../assets/Pictures/personImage.png"),
             name:"Naruto",
             rating:3.0,
             reviews:"My dad so bad, cant even handle claws",

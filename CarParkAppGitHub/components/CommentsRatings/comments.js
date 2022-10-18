@@ -10,9 +10,9 @@ export default function Comments({navigation}){
     const stackNavigation = navigation;
     const drawerNavigation = navigation.getParent();
 
-    const arrowIcon = require("D:/STUDY MATERIAL/SC2006/SC2006 Project/CarParkApp/assets/Pictures/arrowIcon.png")
-    const emptyHeart = require("D:/STUDY MATERIAL/SC2006/SC2006 Project/CarParkApp/assets/Pictures/heartEmptyIcon.png") ;
-    const filledHeart = require("D:/STUDY MATERIAL/SC2006/SC2006 Project/CarParkApp/assets/Pictures/heartFilledIcon.png")
+    const arrowIcon = require("../../assets/Pictures/arrowIcon.png")
+    const emptyHeart = require("../../assets/Pictures/heartEmptyIcon.png") ;
+    const filledHeart = require("../../assets/Pictures/heartFilledIcon.png")
 
     const [heart,setHeart] = useState(false)
     const toHomeCount = 4;

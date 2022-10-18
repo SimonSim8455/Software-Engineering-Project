@@ -16,7 +16,7 @@ export default function Login({navigation}){
         <View style= {styles.container}>
             <TouchableWithoutFeedback onPress= {Keyboard.dismiss}>
                 <View style = {styles.content}>
-                    <Image source ={require('D:/STUDY MATERIAL/SC2006/SC2006 Project/CarParkApp/assets/Pictures/LoginPic2.png')} style ={styles.pic} />
+                    <Image source ={require('../../assets/Pictures/LoginPic2.png')} style ={styles.pic} />
 
                     <Text style = {styles.text}>Email address:</Text>
                     <TextInput 

@@ -4,9 +4,9 @@ import rel from "../share/RelativeRes";
 
 
 export default function SetTimer(){
-    const stopWatchIcon = require("D:/STUDY MATERIAL/SC2006/SC2006 Project/CarParkApp/assets/Pictures/stopWatch.png")
-    const plusIcon = require("D:/STUDY MATERIAL/SC2006/SC2006 Project/CarParkApp/assets/Pictures/plusTimerIcon.png")
-    const minusIcon = require("D:/STUDY MATERIAL/SC2006/SC2006 Project/CarParkApp/assets/Pictures/minusTimerIcon.png")
+    const stopWatchIcon = require("../../assets/Pictures/stopWatch.png")
+    const plusIcon = require("../../assets/Pictures/plusTimerIcon.png")
+    const minusIcon = require("../../assets/Pictures/minusTimerIcon.png")
 
     const [hours,setHours] = useState(0)
     const [minutes,setMinutes] = useState(0)

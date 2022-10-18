@@ -5,8 +5,8 @@ import rel from "../share/RelativeRes";
 
 export default function Buttons({onPressShare, onPressNavigate, onPressStart}){
     
-    const navImg = "D:/STUDY MATERIAL/SC2006/SC2006 Project/CarParkApp/assets/Pictures/navigateButton.png"
-    const shrImg = "D:/STUDY MATERIAL/SC2006/SC2006 Project/CarParkApp/assets/Pictures/shareIcon.png"
+    const navImg = "../../assets/Pictures/navigateButton.png"
+    const shrImg = "../../assets/Pictures/shareIcon.png"
     return(
         <View style={styles.container}>
             <View style={styles.content1}>

@@ -8,7 +8,7 @@ import BottomPopUp from "./bottomPopUp";
 
 const screenHeight = Dimensions.get("screen").height;
 export default function Home({navigation}){
-    const img = "D:/STUDY MATERIAL/SC2006/SC2006 Project/CarParkApp/assets/Pictures/mapBackGround.png"
+    const img = "../../assets/Pictures/mapBackGround.png"
     const [pressed,setPressed] = useState(false)
     const [pressedBot,setPressedBot] = useState(false)
     const [title,setTitle] = useState("Customize your location");

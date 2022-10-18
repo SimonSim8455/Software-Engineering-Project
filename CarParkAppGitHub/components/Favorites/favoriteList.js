@@ -15,7 +15,7 @@ export default function FavoriteList(){
         {name:"J_Cube", location:"B2, near Lobby B", distance:12, time:1,key:6},
     ])
 
-    const heartFilled = require("D:/STUDY MATERIAL/SC2006/SC2006 Project/CarParkApp/assets/Pictures/heartFilledIcon.png")
+    const heartFilled = require("../../assets/Pictures/heartFilledIcon.png")
 
     const onPressList =(item)=>{
         console.log(item.name)

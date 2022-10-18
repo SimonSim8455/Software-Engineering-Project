@@ -4,7 +4,7 @@ import { StyleSheet,View,Text,Image } from "react-native";
 import rel from "../share/RelativeRes"
 
 
-const dummyImg = require("D:/STUDY MATERIAL/SC2006/SC2006 Project/CarParkApp/assets/Pictures/dummyMilkPic.png")
+const dummyImg = require("../../assets/Pictures/dummyMilkPic.png")
 
 export default function FavorHistPopUp({drawerNavigation,title}){
     return(

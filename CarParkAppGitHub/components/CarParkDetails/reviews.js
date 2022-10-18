@@ -4,9 +4,9 @@ import rel from "../share/RelativeRes";
 
 
 export default function Reviews(){
-    const fullStar = "D:/STUDY MATERIAL/SC2006/SC2006 Project/CarParkApp/assets/Pictures/fullStar.png";
-    const halfStar = "D:/STUDY MATERIAL/SC2006/SC2006 Project/CarParkApp/assets/Pictures/halfStar.png";
-    const emptyStar = "D:/STUDY MATERIAL/SC2006/SC2006 Project/CarParkApp/assets/Pictures/emptyStar.png";
+    const fullStar = "../../assets/Pictures/fullStar.png";
+    const halfStar = "../../assets/Pictures/halfStar.png";
+    const emptyStar = "../../assets/Pictures/emptyStar.png";
 
     const reviews = {
         score:3.7,

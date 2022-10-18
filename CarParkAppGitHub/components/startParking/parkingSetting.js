@@ -7,8 +7,8 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 
 
 export default function ParkingSetting(){
-    const plusGrayIcon = require("D:/STUDY MATERIAL/SC2006/SC2006 Project/CarParkApp/assets/Pictures/grayPlusIcon.png");
-    const minusGrayIcon = require("D:/STUDY MATERIAL/SC2006/SC2006 Project/CarParkApp/assets/Pictures/grayMinusIcon.png");
+    const plusGrayIcon = require("../../assets/Pictures/grayPlusIcon.png");
+    const minusGrayIcon = require("../../assets/Pictures/grayMinusIcon.png");
 
     const [alertTime,setAlertTime] = useState(0)
     const pressedPlusAlertTime = () =>{

@@ -13,8 +13,8 @@ export default function PopUpTop({drawerNavigation,onPressBack, onSearch,title})
         drawerNavigation.openDrawer();
     }
 
-    const icon1 = "D:/STUDY MATERIAL/SC2006/SC2006 Project/CarParkApp/assets/Pictures/searchIcon1.png"
-    const icon2 = "D:/STUDY MATERIAL/SC2006/SC2006 Project/CarParkApp/assets/Pictures/locationIconRed.png"
+    const icon1 = "../../assets/Pictures/searchIcon1.png"
+    const icon2 = "../../assets/Pictures/locationIconRed.png"
     return(
             <View style={styles.container}>
                 <View style = {styles.content}>

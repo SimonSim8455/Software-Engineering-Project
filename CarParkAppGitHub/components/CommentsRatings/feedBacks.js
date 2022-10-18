@@ -5,9 +5,9 @@ import rel from "../share/RelativeRes";
 
 export default function FeedBacks() {
 
-    const fullStar = "D:/STUDY MATERIAL/SC2006/SC2006 Project/CarParkApp/assets/Pictures/fullStar.png";
-    const emptyStar = "D:/STUDY MATERIAL/SC2006/SC2006 Project/CarParkApp/assets/Pictures/emptyStar.png";
-    const cornerIcon = require("D:/STUDY MATERIAL/SC2006/SC2006 Project/CarParkApp/assets/Pictures/cornerIcon.png")
+    const fullStar = "../../assets/Pictures/fullStar.png";
+    const emptyStar = "../../assets/Pictures/emptyStar.png";
+    const cornerIcon = require("../../assets/Pictures/cornerIcon.png")
 
     const [numStar,setNumStar] = useState(0)
 

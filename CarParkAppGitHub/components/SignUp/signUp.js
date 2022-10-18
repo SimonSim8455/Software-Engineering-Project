@@ -13,8 +13,8 @@ export default function SignUp({navigation}) {
         navigation.navigate("Drawer");
     }
     
-    const checked = "D:/STUDY MATERIAL/SC2006/SC2006 Project/CarParkApp/assets/Pictures/checkBlue.png";
-    const unchecked = "D:/STUDY MATERIAL/SC2006/SC2006 Project/CarParkApp/assets/Pictures/uncheck.png";
+    const checked = "../../assets/Pictures/checkBlue.png";
+    const unchecked = "../../assets/Pictures/uncheck.png";
     
     const renderTicks = () =>{
         return (<Image 
@@ -43,7 +43,7 @@ export default function SignUp({navigation}) {
             <View style={styles.container}>
                 <View style={styles.content}>
                     <TouchableOpacity>
-                        <Image source ={require('D:/STUDY MATERIAL/SC2006/SC2006 Project/CarParkApp/assets/Pictures/UploadPhotoIcon.png')} style ={styles.pic} />
+                        <Image source ={require('../../assets/Pictures/UploadPhotoIcon.png')} style ={styles.pic} />
                     </TouchableOpacity>
                    
                     <View style={styles.forms}>

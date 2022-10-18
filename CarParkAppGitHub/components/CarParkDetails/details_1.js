@@ -6,12 +6,12 @@ import rel from "../share/RelativeRes";
 export default function Details_1({iconSrcName,title,detail_1,detail_2}){
 
 
-    const mapIcon= "D:/STUDY MATERIAL/SC2006/SC2006 Project/CarParkApp/assets/Pictures/mapIcon.png"
-    const carIcon= "D:/STUDY MATERIAL/SC2006/SC2006 Project/CarParkApp/assets/Pictures/carIcon.png"
-    const humanIcon= "D:/STUDY MATERIAL/SC2006/SC2006 Project/CarParkApp/assets/Pictures/humanIcon.png"
-    const  trolleyIcon= "D:/STUDY MATERIAL/SC2006/SC2006 Project/CarParkApp/assets/Pictures/trolleyIcon.png"
-    const locationCircleIcon= "D:/STUDY MATERIAL/SC2006/SC2006 Project/CarParkApp/assets/Pictures/locationCircleIcon.png"
-    const sandClockIcon= "D:/STUDY MATERIAL/SC2006/SC2006 Project/CarParkApp/assets/Pictures/sandClockIcon.png"
+    const mapIcon= "../../assets/Pictures/mapIcon.png"
+    const carIcon= "../../assets/Pictures/carIcon.png"
+    const humanIcon= "../../assets/Pictures/humanIcon.png"
+    const  trolleyIcon= "../../assets/Pictures/trolleyIcon.png"
+    const locationCircleIcon= "../../assets/Pictures/locationCircleIcon.png"
+    const sandClockIcon= "../../assets/Pictures/sandClockIcon.png"
 
     let details={
         location: "50 Jurong Gateway Rd, Singapore 608549",
