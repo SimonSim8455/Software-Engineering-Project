@@ -67,7 +67,7 @@ const styles = StyleSheet.create({
     },
     location:{
         fontSize:16,
-        fontWeight:"400"
+        fontWeight:"300"
     },
     heartIcon:{
         height:rel("H",20),

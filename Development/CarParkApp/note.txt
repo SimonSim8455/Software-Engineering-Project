@@ -46,6 +46,7 @@ Comments:
 [resolved]
 1. image path
 2. typo error in 'route/homeStack' -- import StartParking from "../startParking.js/StartParking";
+3. update myHistory UI (code)
 
 
 

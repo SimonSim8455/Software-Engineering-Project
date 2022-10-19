@@ -36,7 +36,7 @@ export default function PopUpTop({drawerNavigation,onPressBack, onSearch,title})
                         <Image source={require(icon2)} style={styles.icon3}/>
                         <View style={styles.searchBar1}>
                             <Ionicons name="search" size={20} style={styles.icon2}/>
-                            <Text style= {styles.text2}>Customize start location or current location</Text>
+                            <Text style= {styles.text2}>Enter your Destination</Text>
                         </View>
                     </View>
 
@@ -87,7 +87,7 @@ const styles = StyleSheet.create({
         backgroundColor:"#c6c6c6",
         borderWidth:1,
         borderRadius: 5,
-        width: rel("W", 241),
+        width: rel("W", 255),
         height: rel("H",27),
         alignItems:"center",
         
