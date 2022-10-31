@@ -1,6 +1,6 @@
 import React from "react";
 import {View,Text,StyleSheet,Image ,TouchableOpacity} from 'react-native';
-import { Entypo } from '@expo/vector-icons';
+import { Entypo, AntDesign } from '@expo/vector-icons';
 import rel from "../share/RelativeRes";
 
 export function DrawerContent(props){
@@ -25,6 +25,10 @@ export function DrawerContent(props){
 
     const onPressSandbox = () =>{
         props.navigation.navigate("SandBox")
+    }
+
+    const onPressHelp = () =>{
+        props.navigation.navigate("HelpPage")
     }
 
     return(
@@ -64,6 +68,11 @@ export function DrawerContent(props){
                     <Image source={bookGrayIcon} style = {styles.humanIcon} />
                     <Text style={styles.favoriteText}>SandBox</Text>
                     <Text style={styles.numFavText}>100</Text>
+                </TouchableOpacity>
+
+                <TouchableOpacity style = {styles.home} onPress={onPressHelp}>
+                    <AntDesign name="questioncircleo" size={24} color="grey"/>
+                    <Text style={styles.accountText}>Help</Text>
                 </TouchableOpacity>
             </View>
 
@@ -150,5 +159,5 @@ const styles = StyleSheet.create({
     content4:{
         flexDirection:"row",
         alignItems:"center"
-    }
+    },
 })

@@ -1,6 +1,7 @@
 import { StyleSheet,View,Text ,Image, TouchableOpacity} from "react-native";
 import React, {useState} from "react";
 import rel from "../share/RelativeRes";
+import { useNavigation } from '@react-navigation/native';
 
 export default function HistoryList(){
 
@@ -17,8 +18,11 @@ export default function HistoryList(){
 
     const arrowKey = require("../../assets/Pictures/arrowRightIcon.png")
 
+    const navigation = useNavigation();
+
     const onPressList =(item)=>{
         console.log(item.name)
+        navigation.navigate("HistoryDetails", {item})
     }
     const renderList = () =>{
         let list = (carParks.map((item) =>{

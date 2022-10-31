@@ -7,6 +7,9 @@ import MapViewDirections from 'react-native-maps-directions';
 import HomeButton from '../Home/button'
 import { GOOGLE_API_KEY } from '../../googleAPIkey';
 
+import { useSelector } from 'react-redux';
+import { selectDestination, selectOrigin } from '../../slices/navSlice';
+
 
 const { width, height } = Dimensions.get("screen");
 
@@ -22,6 +25,9 @@ const INITIAL_POSITION = {
 
 
 export default function Map({origin,destination,listCarPark}){
+
+    const ORIGIN = useSelector(selectOrigin);
+    const DESTINATION = useSelector(selectDestination);
 
     const mapRef = useRef(null)
     const parkMarker = require("../../assets/Pictures/parkMarkerR2.png")
@@ -121,6 +127,31 @@ export default function Map({origin,destination,listCarPark}){
                 provider={PROVIDER_GOOGLE}     
                           
             >  
+                {ORIGIN?.location && (
+                    <Marker 
+                        coordinate={{
+                            latitude: ORIGIN.location.lat,
+                            longitude: ORIGIN.location.lng,
+                        }}
+                        title="Origin"
+                        description={ORIGIN.description}
+                        identifier="origin"
+                    >
+                        <Image style={styles.startIcon} source={require('../../assets/Pictures/searchIcon2.png')}/>
+                    </Marker>
+                )}
+
+                {DESTINATION?.location && (
+                    <Marker 
+                        coordinate={{
+                            latitude: DESTINATION.location.lat,
+                            longitude: DESTINATION.location.lng,
+                        }}
+                        title="Destination"
+                        description={DESTINATION.description}
+                        identifier="destination"
+                    />
+                )}
                 {origin!= undefined && <Marker coordinate={origin.position} />}
                 {destination!= undefined && <Marker coordinate={destination.position} />}
                 {renderRoute(origin,destination)}
@@ -186,5 +217,10 @@ const styles = StyleSheet.create({
         height:rel("H",20),
         width:rel("W",20),
         resizeMode:'contain'
-    }
+    },
+    startIcon: {
+        height: 25,
+        width: 25,
+        borderRadius: 20,
+    },
 })

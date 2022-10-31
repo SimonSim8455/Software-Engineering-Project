@@ -6,9 +6,31 @@ import CustomButton from "../Home/customButton";
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
 import { GOOGLE_API_KEY } from "../../googleAPIkey";
 
+import { useDispatch } from 'react-redux';
+import { setDestinationData, setOriginData } from '../../slices/navSlice';
+import { useSelector } from 'react-redux';
+import { selectDestination, selectOrigin } from '../../slices/navSlice';
 
 
 export default function PopUpTop({drawerNavigation,onPressBack, onSearch,title,initialLocations}){
+
+    const dispatch = useDispatch();
+
+    const moveTo = async (position) =>{
+        const camera = await mapRef.current?.getCamera()
+        if(camera){
+            camera.center = position
+            mapRef.current?.animateCamera(camera, {duration: 1000})
+        }
+    }
+
+    const onPlaceSelected = (details) => {
+        const position = {
+          latitude: details.geometry.location.lat,
+          longitude: details.geometry.location.lng,
+        }
+        moveTo(position);
+      }
 
     const renderText= (title) =>{
         return <Text style= {styles.text}>{title}</Text>
@@ -19,11 +41,13 @@ export default function PopUpTop({drawerNavigation,onPressBack, onSearch,title,i
 
     const [locations,setLocations] = useState(initialLocations);
 
-    const getLocations = (details,lable) =>{
-        if(lable == "Origin")  
+    const getLocations = (data,details,lable) =>{
+        if(lable == "Origin"){
             getOrigin(details);
-        else
+        }  
+        else{
             getDestination(details);
+        }
 
     }
 
@@ -111,10 +135,18 @@ export default function PopUpTop({drawerNavigation,onPressBack, onSearch,title,i
                         }}
                         onPress={(data, details) => {
                             handleChangeText(details.formatted_address,lable)
-                            getLocations(details,lable)
+                            getLocations(data,details,lable)
+                            onPlaceSelected(details)
+                            {lable=="Origin" ? (dispatch(setOriginData({
+                                location: details.geometry.location,
+                                description: data.description
+                            }))) : (dispatch(setDestinationData({
+                                location: details.geometry.location,
+                                description: data.description
+                            })))}
                         }}
                         query={{
-                            // key: GOOGLE_API_KEY,
+                            key: GOOGLE_API_KEY,
                             language: 'en',
                         }}
                         suppressDefaultStyles={true}
@@ -230,8 +262,8 @@ const styles = StyleSheet.create({
     },
     textInput:{
         fontSize:17,
-        fontWeight:"600",
-        marginLeft:rel("W",10)
+        fontWeight:"500",
+        marginLeft:rel("W",10),
     },
     content3:{
         marginLeft:rel("W",48),

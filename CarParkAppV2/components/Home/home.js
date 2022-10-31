@@ -7,11 +7,14 @@ import BottomPopUp from "./bottomPopUp";
 import Map from "../Map/map";
 import { getPosition } from "../share/getPosition";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
+import BottomDrawer from 'react-native-bottom-drawer-view';
 
 
 const screenHeight = Dimensions.get("screen").height;
 export default function Home({navigation}){
     
+    const TAB_BAR_HEIGHT = 49;
+
     const drawerNavigation = navigation.getParent();
     const [pressed,setPressed] = useState(false)
     const [pressedBot,setPressedBot] = useState(false)
@@ -148,6 +151,7 @@ export default function Home({navigation}){
         else{
             return(
                 <View style={styles.bottomPopUp}>
+
                     <BottomPopUp onPress= {botPressed} stackNavigation= {navigation} listCarPark ={carParks} 
                         initialLocations ={{
                             originDetails:{
@@ -169,6 +173,7 @@ export default function Home({navigation}){
                         }}
                         callbackHome = {callback}
                     />
+
                 </View >
             )
         }
@@ -183,6 +188,7 @@ export default function Home({navigation}){
                 {renderPopUpTop()} 
                 
                 {renderPopUpBot()}
+
             </GestureHandlerRootView>
         </TouchableWithoutFeedback>
     );

@@ -9,6 +9,8 @@ import Animated,{useAnimatedStyle, useSharedValue} from 'react-native-reanimated
 
 export default function bottomPopUp({onPress, stackNavigation ,listCarPark, initialLocations, callbackHome}){
     
+    const TAB_BAR_HEIGHT = 49;
+
     const [Category, setCategory] = useState([
         {name:"Distance", sort:1},
         {name:"Fare", sort:0},
@@ -108,30 +110,33 @@ export default function bottomPopUp({onPress, stackNavigation ,listCarPark, init
 
     
     return(
-        <GestureDetector>
-            <View style={[styles.container]}>
-                <TouchableWithoutFeedback onPress={onPress}>
-                    <View style={styles.line}></View>
-                </TouchableWithoutFeedback>
-                <View style={styles.content}>
-                    <View style={styles.content1}>
-                        <View style={styles.button}>
-                            {renderCat()}
+        
+            <GestureDetector>
+                <View style={[styles.container]}>
+                    <TouchableWithoutFeedback onPress={onPress}>
+                        <View style={styles.line}></View>
+                    </TouchableWithoutFeedback>
+                    <View style={styles.content}>
+                        <View style={styles.content1}>
+                            <View style={styles.button}>
+                                {renderCat()}
+                            </View>
+                            <View style={styles.button2}>
+                                {renderSort()}
+                            </View>       
                         </View>
-                        <View style={styles.button2}>
-                            {renderSort()}
-                        </View>       
-                    </View>
 
-                    <View style={styles.carParkList}>
-                        <ListOfCarPark stackNavigation = {stackNavigation} listCarPark = {listOfCarPark} 
-                            initialLocations= {initialLocations}
-                            callbackHome = {callbackHome}
-                            />
+                        <View style={styles.carParkList}>
+                            <ListOfCarPark stackNavigation = {stackNavigation} listCarPark = {listOfCarPark} 
+                                initialLocations= {initialLocations}
+                                callbackHome = {callbackHome}
+                                />
+                        </View>
                     </View>
                 </View>
-            </View>
-        </GestureDetector>
+            </GestureDetector>
+
+        
     )
 }
 
