@@ -1,3 +1,3 @@
-const GOOGLE_API_KEY ="AIzaSyAEkMZm6hrOlkU587HZ7SupX3GKt1WlupY";
+const GOOGLE_API_KEY ="YOUR API KEY";
 
 export {GOOGLE_API_KEY};
