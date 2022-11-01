@@ -2,6 +2,7 @@ import React, { useEffect ,useState} from "react";
 import { StyleSheet, View, Text, Image, TextInput, TouchableWithoutFeedback,Keyboard} from "react-native";
 import CustomButton from "../share/CustomButtonBlue"
 import CheckError from "./checkLoginError"
+import Lottie from 'lottie-react-native';
 
 import { auth } from "../../firebase";
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
@@ -89,8 +90,8 @@ export default function Login({navigation}){
         <View style= {styles.container}>
             <TouchableWithoutFeedback onPress= {Keyboard.dismiss}>
                 <View style = {styles.content}>
-                    <Image source ={require('../../assets/Pictures/LoginPic2.png')} style ={styles.pic} />
-
+                    <Lottie source={require('../../assets/Pictures/WeLCOME.mp4.lottie.json')} autoPlay loop/>
+                    <Lottie style={styles.pic} source={require('../../assets/Pictures/EzPark.mp4.lottie (2).json')} autoPlay loop/>
                     <Text style = {styles.text}>Email address:</Text>
                     <TextInput 
                         style={styles.input}
@@ -127,8 +128,10 @@ const styles = StyleSheet.create({
     },
     pic:{
         alignSelf:"center",
-        marginTop:80,
-        marginBottom: 15,
+        marginTop:30,
+        marginBottom: 60,
+        width: 300,
+        height: 300,
     },
     text:{
         fontSize: 15,

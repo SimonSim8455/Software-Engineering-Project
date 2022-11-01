@@ -7,6 +7,7 @@ import Home from "../Home/home";
 import React from "react";
 import { store } from '../../store';
 import { Provider } from 'react-redux';
+import LandingPage from "../LandingPage/landingPage";
 
 export default function HomeStack(){
 

@@ -9,13 +9,14 @@ import { store } from '../../store';
 import { Provider } from 'react-redux';
 import HistoryDetails from '../History/historyDetails';
 import HelpPage from '../HelpPage/helpPage';
+import LandingPage from "../LandingPage/landingPage";
 
 const Drawer = createDrawerNavigator();
 const RootDrawerNavigator = () => {
     return (
         <Provider store={store}>
             <Drawer.Navigator initialRouteName='Home' drawerContent={(props) => <DrawerContent {...props} />} >
-                <Drawer.Screen name= "HomeStack" component={HomeStack} options={{headerShown: false}}/>
+                <Drawer.Screen name="HomeStack" component={HomeStack} options={{headerShown: false}}/>
                 <Drawer.Screen name="Account" component={Account} options={{headerShown: false}}/>
                 <Drawer.Screen name="Favorite" component={Favorite} options={{headerShown: false}}/>
                 <Drawer.Screen name="History" component={History} options={{headerShown: false}}/>
