@@ -3,8 +3,11 @@ import { Keyboard, StyleSheet, Image,Text,View, TouchableOpacity,TouchableWithou
 import Rel from "../share/RelativeRes"
 import CustomButton from "../share/CustomButtonBlue"
 import AntDesign  from 'react-native-vector-icons/AntDesign';
-
+import ImagePicker from 'react-native-image-crop-picker';
 import SignUpForms2 from "./signUpForms2";
+import DummyUser from "../data/dummyUsers";
+import rel from "../share/RelativeRes";
+import UserState from "../data/userState";
 
 const statusBarHeight = StatusBar.currentHeight;
 export default function SignUp({navigation}) {
@@ -15,6 +18,8 @@ export default function SignUp({navigation}) {
     const [passed,setPassed] = useState(false);
     const [image,setImage] = useState(null);
     const [pressed2,setPressed2] = useState(false);
+    const [userData,setUserData] = useState([]);
+    const [created,setCreated] = useState(false);
 
     const checked = "../../assets/Pictures/checkBlue.png";
     const unchecked = "../../assets/Pictures/uncheck.png";
@@ -24,8 +29,20 @@ export default function SignUp({navigation}) {
             if(!tick){
                 Alert.alert("Please allow app to access your location")
             }
-            else
-            navigation.navigate("Drawer")
+            else{
+                setPressed2(false);
+                if(created == false){
+                    DummyUser.registerUser(
+                        DummyUser.length,
+                        userData[0],userData[1],
+                        userData[2],userData[3],
+                        {uri:image},{}
+                    )
+                    setCreated(true)
+                    UserState.setUser_index(DummyUser.length);
+                }
+                navigation.navigate("Drawer")
+            }
         }
     },[passed,pressed2])
     
@@ -35,7 +52,9 @@ export default function SignUp({navigation}) {
         setPressed(false)
     },[pressed])
 
-    const callBack = () =>{
+    const callBack = (email,firstName,lastName,password) =>{
+        setUserData([email,firstName,lastName,password]);
+        setCreated(false);
         setPassed(!passed)
     }
 
@@ -57,24 +76,18 @@ export default function SignUp({navigation}) {
         );
     }  
 
-    // const pickImage = async () => {
-    //     if(!tick2){
-    //         Alert.alert("Please allow app to access your gallery")
-    //         return;
-    //     }
-    //     let result = await ImagePicker.launchImageLibraryAsync({
-    //       mediaTypes: ImagePicker.MediaTypeOptions.All,
-    //       allowsEditing: true,
-    //       aspect: [4, 3],
-    //       quality: 1,
-    //     });
-    
-    //     console.log(result);
-    
-    //     if (!result.cancelled) {
-    //       setImage(result.uri);
-    //     }
-    // };
+
+    const picker = () =>{
+        if(!tick2){
+            Alert.alert("Please allow app to access your gallery")
+            return;
+        }
+        ImagePicker.openPicker({
+            cropping: true
+          }).then(image => {
+            setImage(image.path);
+          });
+    }
 
     const renderImage = () =>{
         let imgSRC = require('../../assets/Pictures/UploadPhotoIcon.png')
@@ -108,26 +121,30 @@ export default function SignUp({navigation}) {
                 </View>
 
                 <View style={styles.content}>
-                    <TouchableOpacity>
-                        {renderImage()}
-                    </TouchableOpacity>
+                    <View style={styles.content1}>
+                        <TouchableOpacity onPress={picker}>
+                            {renderImage()}
+                        </TouchableOpacity>
+                    </View>
                    
                     <View style={styles.forms}>
                         <SignUpForms2 isPressed= {pressed} callBack={callBack}/>
                     </View>
-                
-                    <View style= {styles.tick}>
-                        <TouchableOpacity onPress = {() => setTick(!tick)}> 
-                            {renderTicks()}
-                        </TouchableOpacity>
-                        <Text style={styles.tickText}>Allow the app to access your location.</Text>
-                    </View>
 
-                    <View style= {styles.tick}>
-                        <TouchableOpacity onPress = {() => setTick2(!tick2)}> 
-                            {renderTicks2()}
-                        </TouchableOpacity>
-                        <Text style={styles.tickText}>Allow the app to access your gallery.</Text>
+                    <View style={styles.content2}>
+                        <View style= {styles.tick}>
+                            <TouchableOpacity onPress = {() => setTick(!tick)}> 
+                                {renderTicks()}
+                            </TouchableOpacity>
+                            <Text style={styles.tickText}>Allow the app to access your location.</Text>
+                        </View>
+
+                        <View style= {styles.tick}>
+                            <TouchableOpacity onPress = {() => setTick2(!tick2)}> 
+                                {renderTicks2()}
+                            </TouchableOpacity>
+                            <Text style={styles.tickText}>Allow the app to access your gallery.</Text>
+                        </View>
                     </View>
 
                     <View style={styles.button}>
@@ -149,10 +166,16 @@ const styles = StyleSheet.create({
         padding :40,
         paddingTop: 10,
     },
+    content1:{
+        height:Rel("H",110)
+    },
+    content2:{
+        marginTop:rel("H",14)
+    },
     pic:{
         width: Rel("W",125),
-        height: Rel("H",116),
-        resizeMode:"contain",
+        height: Rel("H",100),
+        resizeMode:"cover",
         alignSelf:"center"
     },
     forms:{
@@ -165,14 +188,14 @@ const styles = StyleSheet.create({
     },
     tick:{
         flexDirection: "row",
-        marginTop : 10,
+        marginTop : rel("H",10),
         height: Rel("H",24)
     },
     tickText:{
         paddingLeft : 10,
     },
     button:{
-        marginTop:Rel("H",25),
+        marginTop:Rel("H",15),
     },
     checkBox:{
         height:20,

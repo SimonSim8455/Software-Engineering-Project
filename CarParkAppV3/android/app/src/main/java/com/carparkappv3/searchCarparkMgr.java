@@ -16,16 +16,19 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import android.content.Context;
 
 public class searchCarparkMgr{
     private CarPark[] cpArray = new CarPark[3000];
     private static List<CarPark> carParks = new ArrayList<>();
 
+    Context context;
     public searchCarparkMgr(){
 
     }
@@ -41,32 +44,11 @@ public class searchCarparkMgr{
             carPark.setAddress(readableArray.getMap(k).getString("address"));
             carPark.setX_coord(readableArray.getMap(k).getDouble("X_coord"));
             carPark.setY_coord(readableArray.getMap(k).getDouble("Y_coord"));
+            carPark.setFreeParking(readableArray.getMap(k).getString("freeParking"));
+            carPark.setOpenHrs(readableArray.getMap(k).getString("openHrs"));
+            carPark.setHalfHour_price(0.60);
+            carPark.setHourly_price(0.65);
             carPark.setDist(1000000); //initialize all distance to 100000 first
-            carPark.setIsHDB(true);
-            carParks.add(carPark);
-        }
-    }
-
-    public void readCarParkDataMall(ReadableArray readableArray){
-        for(int k=0;k<readableArray.size();k++){
-            CarPark carPark = new CarPark();
-            carPark.setName(readableArray.getMap(k).getString("name"));
-            carPark.setAddress(readableArray.getMap(k).getString("name"));
-
-            try{
-                SVY21Coordinate svy21Coordinate = new LatLonCoordinate(
-                        readableArray.getMap(k).getDouble("X_coord"),
-                        readableArray.getMap(k).getDouble("Y_coord")
-                ).asSVY21();
-                carPark.setX_coord(svy21Coordinate.getEasting());
-                carPark.setY_coord(svy21Coordinate.getNorthing());
-            } catch (NumberFormatException e){
-                e.printStackTrace();
-            }
-
-            carPark.setDist(1000000); //initialize all distance to 100000 first
-            carPark.setDataCategory(CarPark.DataCategory.SHOPPING_MALL);
-            carPark.setIsHDB(false);
             carParks.add(carPark);
         }
     }
@@ -79,9 +61,6 @@ public class searchCarparkMgr{
         for (int k=0;k<carParks.size();k++) {
             carParks.get(k).setDist(Math.sqrt(Math.pow(carParks.get(k).getX_coord() - currentSVY21Location.getEasting(), 2) + Math.pow( carParks.get(k).getY_coord() - currentSVY21Location.getNorthing(), 2)));
         }
-
-        //displays the arraylist sorted by distance
-        //change cp2 and cp1 arguments to change decreasing to increasing
         Collections.sort(carParks, new Comparator<CarPark>() {
             @Override
             public int compare(CarPark cp1, CarPark cp2) {
@@ -89,26 +68,25 @@ public class searchCarparkMgr{
             }
         });
 
-        //transfer this data into the array
-//        for (int i = 0; i < carParks.size(); i++) {
-//            carParks.get(i).setDataCategory(CarPark.DataCategory.AVAILABILITY);
-//            cpArray[i] = carParks.get(i);
-//        }
-
     }
 
-    public WritableNativeArray sortedCarPark(int counter){
+    public WritableNativeMap sortedCarPark(int counter){
         CarPark re = carParks.get(counter);
         SVY21Coordinate coord =  new SVY21Coordinate(re.getX_coord(),re.getY_coord());
         LatLonCoordinate coordLat = coord.asLatLon();
 
-        WritableNativeArray nativeArray = new WritableNativeArray();
-        nativeArray.pushString(re.getName());
-        nativeArray.pushString(re.getAddress());
-        nativeArray.pushDouble(coordLat.getLatitude());
-        nativeArray.pushDouble(coordLat.getLongitude());
+        WritableNativeMap nativeMap= new WritableNativeMap();
+        nativeMap.putString("name",re.getName());
+        nativeMap.putString("address",re.getAddress());
+        nativeMap.putDouble("latitude",coordLat.getLatitude());
+        nativeMap.putDouble("longitude",coordLat.getLongitude());
+        nativeMap.putString("freeParking",re.getFreeParking());
+        nativeMap.putString("openHrs",re.getOpenHrs());
+        nativeMap.putDouble("halfHrs_price",re.getHalfHour_price());
+        nativeMap.putDouble("hourly_price",re.getHourly_price());
+        nativeMap.putDouble("distance",re.getDist());
 
-        return nativeArray;
+        return nativeMap;
     }
 
 }

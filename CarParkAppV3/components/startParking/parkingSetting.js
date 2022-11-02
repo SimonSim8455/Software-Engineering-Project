@@ -4,19 +4,20 @@ import SetTimer from "./setTimer";
 import SetNotes from "../share/setNotes"
 import rel from "../share/RelativeRes";
 import { TouchableOpacity } from "react-native-gesture-handler";
+import FindNearCarPark from "../ReadCSV/findNearCarPark";
+import ChooseCarPark from "../data/chooseCarPark";
 
 
-export default function ParkingSetting({getImgNoteCallBack}){
+export default function ParkingSetting(){
     const plusGrayIcon = require("../../assets/Pictures/grayPlusIcon.png");
     const minusGrayIcon = require("../../assets/Pictures/grayMinusIcon.png");
     const [alertTime,setAlertTime] = useState(0)
     const [hrs,setHrs] = useState(0)
     
-    const [fare,setFare] = useState(0.60);
-    const [perHour,setPerHour] = useState(0.5);
+    const [fare,setFare] = useState(ChooseCarPark.carParkFare);
+    const [perHour,setPerHour] = useState(1);
     const [estStr,setEstStr] = useState(0);
-
-
+    
     const pressedPlusAlertTime = () =>{
         setAlertTime(alertTime+1)
     }
@@ -29,20 +30,24 @@ export default function ParkingSetting({getImgNoteCallBack}){
     }) 
 
     useEffect(()=>{
-        let ans = (hrs*fare)/perHour;
-        setEstStr(ans);
+        let ans = (hrs*fare)/perHour <=1 ? fare:(hrs*fare)/perHour;
+        setEstStr(ans.toFixed(2));
+        ChooseCarPark.setDuration(hrs);
+        ChooseCarPark.setPerHour(perHour);
+        ChooseCarPark.setFare(ans.toFixed(2));
+        ChooseCarPark.setCarParkFare(fare);
     },[hrs])
 
-    const getImgNote = useCallback((imageUri,notes)=>{
-        getImgNoteCallBack(imageUri,notes)
-    })
 
-    
+    useEffect(()=>{
+        ChooseCarPark.setAlertTime(alertTime);
+    },[alertTime])
+
     return(
         <View style = {styles.container}>
             <View style={styles.content1}>
                 <Text style = {styles.title}>Location:</Text>
-                <Text style={styles.desText}>50 GateWay Jurong LON L L LO S A P OPOSOMPPMP OAPOKAP</Text>
+                <Text style={styles.desText}>{ChooseCarPark.location}</Text>
                 <Text style={[styles.title, {marginTop:rel("H",15)}]}>Enter your parking time estimation:</Text>
             </View>
 
@@ -72,8 +77,9 @@ export default function ParkingSetting({getImgNoteCallBack}){
             </View>
 
             <View style = {styles.content4}>
-                <SetNotes imageUri={null} notes={null} getImgNoteCallBack = {getImgNote} edit={true}/>
+                <SetNotes edit={true}/>
             </View>
+
         </View>
     )
 }
@@ -140,6 +146,10 @@ const styles = StyleSheet.create({
         marginTop:rel("H",10),
         backgroundColor:"#f7fcff",
         borderRadius: 16,
+    },
+    content5:{
+        marginTop:rel("H",10),
+        alignItems:"center"
     }
 })
 

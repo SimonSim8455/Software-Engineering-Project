@@ -1,14 +1,15 @@
 import MapView, {LatLng, PROVIDER_GOOGLE, Marker, Callout, Circle,Polygon} from 'react-native-maps';
-import { StyleSheet,View ,Dimensions,Image,Text, StatusBar} from 'react-native';
+import { StyleSheet,View ,Dimensions,Image,Text, StatusBar, PermissionsAndroid} from 'react-native';
 import rel from '../share/RelativeRes';
-import React, {useRef, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import MapViewDirections from 'react-native-maps-directions';
 import HomeButton from '../Home/button'
 import OriDes from '../data/oriDes';
 import NearByCarPark from '../data/nearByCarPark';
 import { GOOGLE_API_KEY } from "../../API_KEY_SRC/googleAPIkey"
 import FindNearCarPark from '../ReadCSV/findNearCarPark';
-
+import ChooseCarPark from '../data/chooseCarPark';
+import UserState from '../data/userState';
 
 
 const { width, height } = Dimensions.get("screen");
@@ -24,10 +25,78 @@ const INITIAL_POSITION = {
 }
 
 
-export default function Map(){
+export default function Map({stackNavigation}){
+
+
+    useEffect(()=>{
+        requestCameraPermission();
+    },[])
+
+    const requestCameraPermission = async () => {
+        try {
+          const granted = await PermissionsAndroid.request(
+            PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+            {
+              title: "Cool Photo App Camera Permission",
+              message:
+                "Cool Photo App needs access to your camera " +
+                "so you can take awesome pictures.",
+              buttonNeutral: "Ask Me Later",
+              buttonNegative: "Cancel",
+              buttonPositive: "OK"
+            }
+          );
+          if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+            console.log("You can use the camera");
+          } else {
+            console.log("Camera permission denied");
+          }
+        } catch (err) {
+          console.warn(err);
+        }
+      };
 
     const mapRef = useRef(null)
     const parkMarker = require("../../assets/Pictures/parkMarkerR2.png")
+    const [lat, setLat] = useState(1.351900);
+    const [lng,setLng] = useState(103.681940);
+    const [dis,setDis] = useState(1000000000000000);
+    const [valid,setValid] = useState(false);
+
+    const setCenter = (nativeEvent) =>{
+        setLat(nativeEvent.coordinate.latitude)
+        setLng(nativeEvent.coordinate.longitude)
+        if(valid){
+            moveTo({
+                latitude: nativeEvent.coordinate.latitude,
+                longitude: nativeEvent.coordinate.longitude
+            })
+        }
+        OriDes.setCurrentLocation(nativeEvent.coordinate.latitude,nativeEvent.coordinate.longitude);
+    }
+
+    const handleOnPress = () =>{
+        setValid(false)
+    }
+    useEffect(()=>{
+        if(detOD()!=null){
+            let b = detOD().destination
+            let a = distance(lat,lng,b.latitude,b.longitude);
+            if(a<=0.1){
+                if(UserState.locState==0)
+                    stackNavigation.navigate("CarParkDetails")
+                else if(UserState.locState ==1){
+                    stackNavigation.pop();
+                }
+                else if(UserState.locState ==2){
+                    stackNavigation.pop();
+                }
+                else{
+                    return;
+                }
+            }   
+        }
+    },[lat,lng])
 
     const zoomInHandler = async () =>{
         const camera = await mapRef.current?.getCamera()
@@ -37,16 +106,17 @@ export default function Map(){
         }
     }
 
-    const recenter = async (position) =>{
+    const recenter = async () =>{
         const camera = await mapRef.current?.getCamera()
         if(camera){
             camera.center = {
-                latitude: 1.351900,
-                longitude: 103.681940,
+                latitude: lat,
+                longitude: lng
             }
             // camera.center = position;
             mapRef.current?.animateCamera(camera, {duration: 1000})
         }
+        setValid(true)
     }
     
     const zoomOutHandler = async () =>{
@@ -57,6 +127,12 @@ export default function Map(){
         }
     }
 
+    useEffect(()=>{
+        if(OriDes._destinationDetails!=null){
+            moveTo(OriDes._destinationDetails.position)
+        }
+    },[OriDes._destinationDetails])
+
     const moveTo = async (position) =>{
         const camera = await mapRef.current?.getCamera()
         if(camera){
@@ -64,30 +140,78 @@ export default function Map(){
             mapRef.current?.animateCamera(camera, {duration: 1000})
         }
     }
+
     const renderRoute = () =>{
-        let origin = OriDes._originalDetails; 
-        let destination = OriDes._destinationDetails;
-        
-        if(origin && destination){
-            moveTo(destination.position)
+        if(detOD()!= null){
+            return(
+                <MapViewDirections
+                    origin={detOD().origin}
+                    destination={detOD().destination}
+                    apikey={GOOGLE_API_KEY}
+                    strokeColor="#6644ff"
+                    strokeWidth={4}
+                    mode= {detOD().mode}
+                />
+            )
         }
         else{
             return;
         }
-        return(
-            <MapViewDirections
-                origin={origin.position}
-                destination={destination.position}
-                apikey={GOOGLE_API_KEY}
-                strokeColor="#6644ff"
-                strokeWidth={4}
-            />
-        )
+    }
+
+    useEffect(()=>{
+        UserState.setLocState(0)
+    },[OriDes._originalDetails, OriDes._destinationDetails])
+
+    const detOD = () =>{
+        let origin;
+        let destination;
+        let mode;
+        if(UserState.locState == 3){
+            return null;
+        }
+        if(!(OriDes._originalDetails && OriDes._destinationDetails)){
+            return null;
+        }
+
+        // 0 :departure to car park
+        if(UserState.locState ==0){
+            origin = OriDes._originalDetails.position;
+            destination = OriDes._destinationDetails.position;
+            mode = "DRIVING"
+        }
+        // 1: car park to destination
+        else if( UserState.locState == 1){
+            origin = ChooseCarPark.position;
+            destination = OriDes._destinationDetails.position;
+            mode = "WALKING"
+        }
+        // 2: destination to car park
+        else{
+            origin = OriDes._destinationDetails.position;
+            destination = ChooseCarPark.position
+            mode = "WALKING"
+        }
+
+        return{
+            origin:origin,
+            destination:destination,
+            mode:mode,
+        }
+    }
+
+    const distance = (lat1, lon1, lat2, lon2) =>{
+        var p = 0.017453292519943295;    // Math.PI / 180
+        var c = Math.cos;
+        var a = 0.5 - c((lat2 - lat1) * p)/2 + 
+                c(lat1 * p) * c(lat2 * p) * 
+                (1 - c((lon2 - lon1) * p))/2;
+      
+        return 12742 * Math.asin(Math.sqrt(a)); // 2 * R; R = 6371 km
     }
 
     const renderCarPark = () =>{
         let  listCarPark = FindNearCarPark._carParks;
-        console.log(listCarPark);
         if(!listCarPark) return;
         let list = [];
         for(let i=0;i<listCarPark.length;i++){
@@ -125,8 +249,10 @@ export default function Map(){
                 ref = {mapRef}
                 style={styles.map} 
                 initialRegion={INITIAL_POSITION}
-                provider={PROVIDER_GOOGLE}     
-                          
+                provider={PROVIDER_GOOGLE}  
+                showsUserLocation ={true}   
+                onUserLocationChange={event => setCenter(event.nativeEvent)}
+                onPress = {handleOnPress}
             >  
                 {OriDes._originalDetails && <Marker coordinate={OriDes._originalDetails.position} />}
                 {OriDes._destinationDetails && <Marker coordinate={OriDes._destinationDetails.position} />}
@@ -135,7 +261,7 @@ export default function Map(){
                 {renderCircle()}
             </MapView>
             <View style={styles.button}>
-                <HomeButton myLocationHandler={() =>recenter(OriDes._originalDetails.position)} zoomInHandler ={zoomInHandler} zoomOutHandler= {zoomOutHandler}/>
+                <HomeButton myLocationHandler={recenter} zoomInHandler ={zoomInHandler} zoomOutHandler= {zoomOutHandler}/>
             </View>
         </View>
     )

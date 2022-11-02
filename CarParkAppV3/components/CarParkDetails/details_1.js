@@ -1,9 +1,11 @@
 import React from "react";
 import { StyleSheet ,View,Text,ScrollView,Image} from "react-native";
 import rel from "../share/RelativeRes";
+import FindNearCarPark from "../ReadCSV/findNearCarPark";
+import ChooseCarPark from "../data/chooseCarPark";
+import CarParkAPI from "../data/carParkAPI";
 
-
-export default function Details_1({iconSrcName,title,detail_1,detail_2}){
+export default function Details_1(){
 
 
     const mapIcon= "../../assets/Pictures/mapIcon.png"
@@ -13,15 +15,19 @@ export default function Details_1({iconSrcName,title,detail_1,detail_2}){
     const locationCircleIcon= "../../assets/Pictures/locationCircleIcon.png"
     const sandClockIcon= "../../assets/Pictures/sandClockIcon.png"
 
-    let details={
-        location: "50 Jurong Gateway Rd, Singapore 608549",
-        driveTime:"16 mins/10.9km",
-        walkingTime:"4 mins/350m",
-        rateCar:"car: $0.60/0.5hour",
-        rateMotor:"Motorcycle: $0.70/lot",
-        availability:"135/300",
-        openHrs:"8.00am - 10.00pm",
+    let details;
+    let cpr = ChooseCarPark;
+    details={
+        location: cpr.location,
+        driveTime:"16 min,10.9km",
+        walkingTime:"4 mins/" + cpr.distance +"m",
+        rateCar: cpr.carParkFare,
+        rateMotor:"None",
+        availability: CarParkAPI.choosen.lots_available + "/" + CarParkAPI.choosen.total_lots,
+        openHrs:cpr.openHrs,
     }
+    
+
         
 
     return (

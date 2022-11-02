@@ -1,11 +1,13 @@
 import { StyleSheet,View,Text ,Image, TouchableOpacity} from "react-native";
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import rel from "../share/RelativeRes";
+import UserState from "../data/userState";
+import DummyUser from "../data/dummyUsers";
+import CarParkAPI from "../data/carParkAPI";
 
-export default function FavoriteList(){
+export default function FavoriteList({stackNavigation}){
 
     const [carParks,setCarParks] = useState([
-
         {name:"BlueSGCarPArk", location:"B2, near Lobby B", distance:10, time:1, key:0},
         {name:"JE Mall", location:"B2, near Lobby B", distance:11, time:1,key:1},
         {name:"J_Cube", location:"B2, near Lobby B", distance:12, time:1,key:2},
@@ -15,15 +17,30 @@ export default function FavoriteList(){
         {name:"J_Cube", location:"B2, near Lobby B", distance:12, time:1,key:6},
     ])
 
+
+    useEffect(()=>{
+        if(UserState.user_index!=-1){
+            let d = DummyUser.userArr[UserState.user_index].favorite;
+            let c =[];
+            let e = Object.keys(d);
+            for(let j=0;j<e.length;j++){
+                c[j] = d[e];
+            }
+            setCarParks(c);
+            CarParkAPI.callAPIFav(e)
+        }
+    },[UserState.user_index])
+
     const heartFilled = require("../../assets/Pictures/heartFilledIcon.png")
 
     const onPressList =(item)=>{
-        console.log(item.name)
+        console.log(item)
+        stackNavigation.navigate("FavCarParkDetails",{item})
     }
     const renderList = () =>{
-        let list = (carParks.map((item) =>{
+        let list = (carParks.map((item,index) =>{
             return(
-                <TouchableOpacity style={styles.box} key={item.key} onPress={() => onPressList(item)}>
+                <TouchableOpacity style={styles.box} key={index} onPress={() => onPressList(item)}>
                     <Text style={styles.carParkName}>{item.name}</Text>
                     <View style={styles.innerBox}>
                         <Text style ={styles.location}>{item.location}</Text>
@@ -59,7 +76,7 @@ const styles = StyleSheet.create({
     },
     carParkName:{
         fontSize:22,
-        fontWeight:"500"
+        fontWeight:"800"
     },
     innerBox:{
         flexDirection:"row",
@@ -67,7 +84,7 @@ const styles = StyleSheet.create({
     },
     location:{
         fontSize:16,
-        fontWeight:"300"
+        fontWeight:"500"
     },
     heartIcon:{
         height:rel("H",20),

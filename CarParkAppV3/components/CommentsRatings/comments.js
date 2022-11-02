@@ -1,10 +1,16 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { StyleSheet ,View,Text,Image,ScrollView,TouchableOpacity, StatusBar} from "react-native";
 import rel from "../share/RelativeRes";
 import CommentPopUpTop from "../share/popUpTopSmall";
 import FeedBacks from "./feedBacks";
 import CustomButtonRed from "../share/CustomButtonRed";
 import { StackActions } from '@react-navigation/native';
+import ChooseCarPark from "../data/chooseCarPark";
+import FindNearCarPark from "../ReadCSV/findNearCarPark";
+import UserHistory from "../data/userHistory";
+import DummyUser from "../data/dummyUsers";
+import UserState from "../data/userState";
+import DummyReview from "../data/dummyReviews";
 
 const statusBarHeight = StatusBar.currentHeight;
 export default function Comments({navigation}){
@@ -17,7 +23,22 @@ export default function Comments({navigation}){
 
     const [heart,setHeart] = useState(false)
     const toHomeCount = 4;
+    useEffect(()=>{
+        setHeart(DummyUser.userArr[UserState.user_index].favorite.hasOwnProperty(ChooseCarPark.name))
+    },[])
     const onDone = () =>{
+        //add history here
+        ChooseCarPark.setFavorite(heart);
+        DummyUser.userArr[UserState.user_index].addHistory();
+        if(heart){
+            DummyUser.userArr[UserState.user_index].addFavorite(ChooseCarPark)
+        }
+        DummyReview.addReviews(ChooseCarPark.name,{
+            rating:ChooseCarPark.rating,
+            feedBack:ChooseCarPark.feedBack,
+            imageSRC:DummyUser.userArr[UserState.user_index].imageUri,
+            name:DummyUser.userArr[UserState.user_index].firstName + DummyUser.userArr[UserState.user_index].lastName,
+        })
         const popAction = StackActions.pop(toHomeCount);
         stackNavigation.dispatch(popAction);
     }
@@ -65,7 +86,7 @@ export default function Comments({navigation}){
                 </View>
 
                 <View style={styles.content2}>
-                    <Text style={styles.carParkText}>Blue CraAprk Hello ASIIN INSI ISNIININSIISISNISISINIS</Text>
+                    <Text style={styles.carParkText}>{ChooseCarPark.name}</Text>
                 </View>
 
                 <View style={styles.content3}>

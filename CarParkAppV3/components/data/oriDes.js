@@ -16,18 +16,44 @@ export default class OriDes{
         name: "Jurong Point",
         formatted_address: "1 Jurong West Central 2, Singapore 648886",
         position:{
-            latitude:1.3398730072174543, 
+            latitude:1.3398730072174543, //close to ? cure lat - lat <= 0.001072
             longitude:103.70727684648821
         }   
     };
 
+    static currentLocation = {
+        latitude :1.3510210126826618,
+        longitude: 103.68580822679573
+    }
+
+    static setCurrentLocation(lat,lng){
+        OriDes.currentLocation.latitude = lat;
+        OriDes.currentLocation.longitude = lng;
+    }
+
+    // static _originalDetails = null;
+    // static _destinationDetails =  null;
+    
     static setOriDetails(details){
-        let originDetail={
-            name: details.name,
-            formatted_address: details.formatted_address,
-            position:{
-                latitude: details.geometry.location.lat,
-                longitude: details.geometry.location.lng,
+        let originDetail;
+        if(details == "Current"){
+            originDetail = {
+                name: "Current Location",
+                formatted_address: "Current Location",
+                position:{
+                    latitude:OriDes.currentLocation.latitude,
+                    longitude:OriDes.currentLocation.longitude,
+                }
+            }
+        }
+        else{
+            originDetail={
+                name: details.name,
+                formatted_address: details.formatted_address,
+                position:{
+                    latitude: details.geometry.location.lat,
+                    longitude: details.geometry.location.lng,
+                }
             }
         }
         OriDes._originalDetails = originDetail;

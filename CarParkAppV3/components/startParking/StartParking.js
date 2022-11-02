@@ -8,31 +8,29 @@ import CustomButtonRed from "../share/CustomButtonRed";
 import { TouchableWithoutFeedback } from "react-native-gesture-handler";
 import OriDes from "../data/oriDes";
 import NearByCarPark from "../data/nearByCarPark";
+import FindNearCarPark from "../ReadCSV/findNearCarPark";
+import ChooseCarPark from "../data/chooseCarPark";
+import CarParkAPI from "../data/carParkAPI";
 
 const statusBarHeight = StatusBar.currentHeight;
-export default function StartParking({navigation,route}){
+export default function StartParking({navigation}){
     const stackNavigation = navigation;
     const drawerNavigation = navigation.getParent();
-    const {name} = route.params;
-
-    const [imageUri,setImageUri] = useState(null);
-    const [notes,setNotes] =useState(null);
 
     const onSearch = () =>{
-        if(OriDes.getDesDetails() && OriDes.getOriDetails()){
-            NearByCarPark.setCarParks(5);
+        if(OriDes._destinationDetails && OriDes._originalDetails){
+            FindNearCarPark.setCarParks(5);
+            CarParkAPI.callAPI();
         }
         stackNavigation.pop(2)
     }
 
     const onPressConitnue=() =>{
-        stackNavigation.navigate("ParkingOnGoing",{name,imageUri,notes})
+        ChooseCarPark.setStartTime("09.40");
+        ChooseCarPark.setEndTime("11.00")
+        ChooseCarPark.setDate("30/08/2022")
+        stackNavigation.navigate("ParkingOnGoing")
     }
-
-    const getImgNote = useCallback((imageUri,notes)=>{
-        setImageUri(imageUri);
-        setNotes(notes);
-    })
 
     return(
         <View style={styles.container}>
@@ -50,12 +48,12 @@ export default function StartParking({navigation,route}){
                     <TouchableWithoutFeedback onPress={() => navigation.goBack()}>
                         <Ionicons name="arrow-back" size={30} color="black" />
                     </TouchableWithoutFeedback>
-                    <Text style={styles.carParkText}>{name}</Text>
+                    <Text style={styles.carParkText}>{ChooseCarPark.name}</Text>
                 </View>
 
                 <View style={styles.content2}>
                     <ScrollView>
-                        <ParkingSetting getImgNoteCallBack = {getImgNote}/>
+                        <ParkingSetting  />
                     </ScrollView>
                 </View>
             </View>

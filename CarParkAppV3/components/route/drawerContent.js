@@ -1,19 +1,43 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {View,Text,StyleSheet,Image ,TouchableOpacity} from 'react-native';
 import rel from "../share/RelativeRes";
 import Entypo from 'react-native-vector-icons/Entypo';
+import DummyUser from "../data/dummyUsers";
+import UserState from "../data/userState";
 
 export function DrawerContent(props){
-    const dummyImg = require("../../assets/Pictures/dummyMilkPic.png")
+    const [dummyImg,setDummyImg] = useState(require('../../assets/Pictures/UploadPhotoIcon.png'));
+    const [firstName,setFirstName] = useState("")
+    const [lastName,setLastName] = useState("")
+    const [email,setEmail] = useState("")
+
+    useEffect(()=>{
+        if(UserState.user_index != -1){
+            setDummyImg(DummyUser.userArr[UserState.user_index].imageUri);
+            setFirstName(DummyUser.userArr[UserState.user_index].firstName)
+            setLastName(DummyUser.userArr[UserState.user_index].lastName)
+            setEmail(DummyUser.userArr[UserState.user_index].email)
+        }
+    },[UserState.user_index])
+
+    useEffect(()=>{
+        if(UserState.user_index != -1){
+            setDummyImg(DummyUser.userArr[UserState.user_index].imageUri);
+            setFirstName(DummyUser.userArr[UserState.user_index].firstName)
+            setLastName(DummyUser.userArr[UserState.user_index].lastName)
+            setEmail(DummyUser.userArr[UserState.user_index].email)
+        }
+    },[UserState.onChnage])
+
     const humanGrayIcon = require("../../assets/Pictures/humanGrayIcon.png")
     const bookGrayIcon = require("../../assets/Pictures/bookGrayIcon.png")
     const bankIcon = require("../../assets/Pictures/bankIcon.png")
     
     const onPressFavor = () =>{
-        props.navigation.navigate("Favorite")
+        props.navigation.navigate("FavoriteStack")
     }
     const onPressHistory = () =>{
-        props.navigation.navigate("History")
+        props.navigation.navigate("HistoryStack")
     }
     const onPressAccount = () =>{
         props.navigation.navigate("Account")
@@ -30,11 +54,11 @@ export function DrawerContent(props){
     return(
         <View style={styles.container}>
             <View style ={styles.content1}>
-                    <Image source={dummyImg} style ={styles.backgroundImg} blurRadius={40} />
+                    <Image source={dummyImg} style ={styles.backgroundImg} blurRadius={20} />
                 <View style={styles.content1_1}>
                     <Image source={dummyImg} style ={styles.profileImg} />
-                    <Text style={styles.titlText}>Milk Shake</Text>
-                    <Text style={styles.titlText}>MilkShake@gmail.com</Text>
+                    <Text style={styles.titlText}>{firstName} {lastName}</Text>
+                    <Text style={styles.titlText}>{email}</Text>
                 </View>
             </View>
             <View style={styles.content2}>

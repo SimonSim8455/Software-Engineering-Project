@@ -1,5 +1,6 @@
 package com.carparkappv3;
 
+import android.content.Context;
 import android.telecom.Call;
 
 import androidx.annotation.Nullable;
@@ -12,11 +13,16 @@ import com.facebook.react.bridge.ReadableArray;
 import com.facebook.react.bridge.ReadableMap;
 import com.facebook.react.bridge.ReadableNativeArray;
 import com.facebook.react.bridge.WritableNativeArray;
+import com.facebook.react.bridge.WritableNativeMap;
 
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
 public class SearchCarParkModule extends ReactContextBaseJavaModule {
+
+    public static searchCarparkMgr GA;
+    public static Context scpContext;
 
     public SearchCarParkModule (@Nullable ReactApplicationContext reactContext) {
         super(reactContext);
@@ -26,9 +32,6 @@ public class SearchCarParkModule extends ReactContextBaseJavaModule {
     public String getName() {
         return "SearchCarParkModule";
     }
-
-
-    public static searchCarparkMgr GA;
 
     @ReactMethod
     public static void Init(Callback cb){
@@ -42,18 +45,15 @@ public class SearchCarParkModule extends ReactContextBaseJavaModule {
         if(place ==0){
             GA.readCarParkData(readableArray);
         }
-        else if(place ==1) {
-            GA.readCarParkDataMall(readableArray);
-        }
     }
 
     @ReactMethod
-    public static void findNearCarPark(double latitude, double longitude, int num, Callback cb){
+    public static void findNearCarPark(double latitude, double longitude, int num,Callback cb){
             GA.calcCarparkDist(latitude,longitude);
             WritableNativeArray listofCarPark = new WritableNativeArray();
             for(int j=0;j<num;j++) {
-                WritableNativeArray elm = GA.sortedCarPark(j);
-                listofCarPark.pushArray(elm);
+                WritableNativeMap elm = GA.sortedCarPark(j);
+                listofCarPark.pushMap(elm);
             }
             cb.invoke(listofCarPark);
 

@@ -1,9 +1,11 @@
 import React, { useEffect ,useState} from "react";
-import { StyleSheet, View, Text, Image, TextInput, TouchableWithoutFeedback,Keyboard} from "react-native";
+import { StyleSheet, View, Text, Image, TextInput, TouchableWithoutFeedback,Keyboard, Alert} from "react-native";
 import CustomButton from "../share/CustomButtonBlue"
 import CheckError from "./checkLoginError"
 import { auth } from "../../API_KEY_SRC/firebase_config"
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import UserState from "../data/userState";
+import DummyUser from "../data/dummyUsers";
 
 
 
@@ -14,14 +16,14 @@ export default function Login({navigation}){
 
     const [email,setEmail] = useState("")
     const [password,setPassword] =useState("")
-    const [emailE,setEmailE] = useState("")
-    const [passwordE,setPasswordE] =useState("")
     const [emailC,setEmailC] = useState(false)
     const [passwordC,setPasswordC] =useState(false)
-
     
     useEffect(() =>{
         setPressedLogin(false)
+        setPassed(false)
+        setEmailC(false)
+        setPasswordC(false)
         if(passed){
             navigation.navigate("Drawer")
         }
@@ -30,14 +32,15 @@ export default function Login({navigation}){
     useEffect(()=>{
         if(pressedLogin == true){
             setInit(false)
-
-            const [a,b] = CheckError("email",email)
+            let [a,b]=  CheckError(email,password)
             setEmailC(a)
-            setEmailE(b)
-
-            const [g,h] = CheckError("password",password)
-            setPasswordC(g)
-            setPasswordE(h)
+            setPasswordC(a)
+            if(!a){
+                Alert.alert("Invalid email or password, Please try again");
+            }
+            if(a){
+                UserState.setUser_index(b);
+            }
         }
         setPressedLogin(false)
     },[pressedLogin])
@@ -97,14 +100,18 @@ export default function Login({navigation}){
                         style={styles.input}
                         onChangeText={(val)=>setEmail(val)}
                     />
-                    {renderInitErrorMsg(emailE,emailC)}
+                    <View style={styles.errorMsg}>
+                        <Text style={styles.errorText}></Text>
+                    </View>
                     <Text style ={styles.text}>Password:</Text>
                     <TextInput 
                         secureTextEntry={true}
                         style={styles.input}
                         onChangeText={(val)=>setPassword(val)}
                     />
-                    {renderInitErrorMsg(passwordE,passwordC)}
+                    <View style={styles.errorMsg}>
+                        <Text style={styles.errorText}></Text>
+                    </View>
                     <Text style ={{...styles.text, ...styles.forgetPassword}}>Forget Password</Text>
                     <CustomButton text="Login" onPress ={()=>setPressedLogin(true)}/>
                     <Text style ={styles.line}></Text>

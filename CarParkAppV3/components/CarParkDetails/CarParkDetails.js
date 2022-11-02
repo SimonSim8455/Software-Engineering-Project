@@ -7,23 +7,28 @@ import Details from "./details";
 import PopUpTop from "../share/popUpTop"
 import OriDes from "../data/oriDes";
 import NearByCarPark from "../data/nearByCarPark";
+import FindNearCarPark from "../ReadCSV/findNearCarPark";
+import ChooseCarPark from "../data/chooseCarPark";
+import CarParkAPI from "../data/carParkAPI";
+import UserState from "../data/userState";
 
 
 const statusBarHeight = StatusBar.currentHeight;
-export default function CarParkDetails({navigation,route}){
+export default function CarParkDetails({navigation}){
     const drawerNavigation = navigation.getParent();
     const stackNavigation = navigation;
-    const {name} = route.params;
     const onSearch = () =>{
-        if(OriDes.getDesDetails() && OriDes.getOriDetails()){
-            NearByCarPark.setCarParks(5);
+        if(OriDes._destinationDetails && OriDes._originalDetails){
+            FindNearCarPark.setCarParks(5);
+            CarParkAPI.callAPI();
         }
         stackNavigation.pop()
     }
     const onPressStart =() =>{
-        navigation.navigate("StartParking", {name})
+        navigation.navigate("StartParking")
     }
     const onPressNavigate = () =>{
+        UserState.setLocState(1)
         navigation.pop()
     }
     const onPressShare = () =>{
@@ -44,11 +49,11 @@ export default function CarParkDetails({navigation,route}){
                     <TouchableWithoutFeedback onPress={() => navigation.goBack()}>
                         <Icon name="arrow-back" size={30} color="black" />
                     </TouchableWithoutFeedback>
-                    <Text style={styles.carParkText}>{name}</Text>
+                    <Text style={styles.carParkText}>{ChooseCarPark.name}</Text>
                 </View>
 
                 <View style={styles.content2}>
-                    <Details />
+                    <Details/>
                 </View>
 
                 <View style={styles.content3}>

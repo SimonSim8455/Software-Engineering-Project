@@ -10,16 +10,15 @@ import OriDes from "../data/oriDes"
 
 
 const statusBarHeight = StatusBar.currentHeight;
-export default function PopUpTop({drawerNavigation,onPressBack, onSearch,title}){
-
+export default function PopUpTop({drawerNavigation, onSearch,title,item}){
+    const [origin,setOri] = useState(null);
+    const [destination,setDes] = useState(null);
     const renderText= (title) =>{
         return <Text style= {styles.text}>{title}</Text>
     }
     const drawer = () =>{
         drawerNavigation.openDrawer();
     }
-
-
 
     const setLocations = (details,lable) =>{
         if(lable == "Origin")  
@@ -29,22 +28,30 @@ export default function PopUpTop({drawerNavigation,onPressBack, onSearch,title})
 
     }
 
+    const delayOnSearch = () =>{
+        if(origin!=null)
+            OriDes.setOriDetails(origin);
+        if(destination!=null)
+            OriDes.setDesDetails(destination);
+        onSearch();
+    }
+
     const setOrigin = (details) =>{
         if(details){
-            OriDes.setOriDetails(details);
+            setOri(details)
         }
     }
 
     const setDestination = (details) =>{
         if(details){
-            OriDes.setDesDetails(details);
+            setDes(details)
         }
     }
 
     const [originR,setOriginR] = useState(false);
     const [destR,setDestR] = useState(false);
-    const [originValue,setOriginValue] = useState(OriDes.getOriDetails() ? OriDes.getOriDetails().formatted_address : "");
-    const [destinationValue,setDestinationValue] = useState(OriDes.getDesDetails() ? OriDes.getDesDetails().formatted_address : "");
+    const [originValue,setOriginValue] = useState("Current Position");
+    const [destinationValue,setDestinationValue] = useState(item.name);
     
     const handleChangeText= (text,lable) =>{
         if(lable == "Origin")
@@ -52,7 +59,7 @@ export default function PopUpTop({drawerNavigation,onPressBack, onSearch,title})
         else
             setDestinationValue(text);
     }
-    
+
     const renderSearhBar = (lable,title) =>{
         let text,renderOut,setRender;
         if(lable == "Origin"){
@@ -116,9 +123,7 @@ export default function PopUpTop({drawerNavigation,onPressBack, onSearch,title})
         }
     }
 
-    const delayOnSearch = () =>{
-        onSearch();
-    }
+
     const icon1 = "../../assets/Pictures/searchIcon1.png"
     const icon2 = "../../assets/Pictures/locationIconRed.png"
     return(
@@ -132,9 +137,6 @@ export default function PopUpTop({drawerNavigation,onPressBack, onSearch,title})
                     </View>
 
                         <View style={styles.content2}>
-                            <TouchableWithoutFeedback onPress= {onPressBack}>
-                                <Ionicons name="arrow-back" size={24} color="white"/>
-                            </TouchableWithoutFeedback>
                             <Image source={require(icon1)} style={styles.icon1}/>
                             <View style= {styles.searchBar1}>
                                 <TouchableWithoutFeedback onPress={()=>setOriginR(!originR) }>

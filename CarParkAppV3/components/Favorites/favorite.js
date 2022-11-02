@@ -1,13 +1,17 @@
-import React, {useState} from "react";
+import React, {useCallback, useEffect, useState} from "react";
 import { StyleSheet,View,Text ,StatusBar} from "react-native";
 import rel from "../share/RelativeRes";
 import FavorHistPopUp from "../share/favorHistPopUp";
 import { ScrollView } from "react-native-gesture-handler";
 import FavoriteList from "./favoriteList";
+import UserState from "../data/userState";
+import FavPopUpTop from "./favPopUpTop"
 
 const statusBarHeight = StatusBar.currentHeight;
 export default function Favorite({navigation}){
-    const drawerNavigation = navigation;
+    const drawerNavigation= navigation.getParent;
+    const stackNavigation = navigation;
+
 
     return(
         <View style={styles.container}>
@@ -17,7 +21,7 @@ export default function Favorite({navigation}){
 
             <View style={styles.content1}>
                 <ScrollView>
-                    <FavoriteList/>
+                    <FavoriteList stackNavigation = {stackNavigation}/>
                 </ScrollView>
             </View>
         </View>

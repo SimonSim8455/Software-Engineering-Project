@@ -1,13 +1,14 @@
-export default function CheckError(credName, cred){
-    if(credName == "email"){
-        return [true,'Email existed']
+import DummyUser from "../data/dummyUsers";
+
+export default function CheckError(email, password){
+
+    for(let i=0;i<DummyUser.userArr.length;i++){
+        console.log(DummyUser.userArr[i].email);
+        console.log(DummyUser.userArr[i].password);
+        if(DummyUser.userArr[i].email == email &&  DummyUser.userArr[i].password == password){
+            return [true,i];
+        }
     }
+    return [false,-1];
     
-    if(credName == 'password'){
-        if(cred.length <3)
-            return [false,'Too Short']
-
-        return [true,'']
-    }
-
 }

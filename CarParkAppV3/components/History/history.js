@@ -3,11 +3,12 @@ import { StyleSheet,View,Text,StatusBar } from "react-native";
 import rel from "../share/RelativeRes";
 import FavorHistPopUp from "../share/favorHistPopUp";
 import { ScrollView } from "react-native-gesture-handler";
-import HistoryList from "./historyList";
+import HistoryRender from "./historyRender";
 
 const statusBarHeight = StatusBar.currentHeight;
 export default function History({navigation}){
-    const drawerNavigation = navigation;
+    const drawerNavigation = navigation.getParent();
+    const stackNavigation = navigation;
     
     return(
         <View style={styles.container}>
@@ -17,7 +18,7 @@ export default function History({navigation}){
 
         <View style={styles.content1}>
             <ScrollView>
-                <HistoryList/>
+                <HistoryRender stackNavigation={stackNavigation}/>
             </ScrollView>
         </View>
     </View>

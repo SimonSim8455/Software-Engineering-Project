@@ -5,6 +5,7 @@ import CheckError from "./checkSignUpError";
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import AntDesign  from 'react-native-vector-icons/AntDesign';
+import UserData from "../data/UserData";
 
 export default function SignUpForms({isPressed,callBack}){
     const [email,setEmail] = useState("")
@@ -54,7 +55,7 @@ export default function SignUpForms({isPressed,callBack}){
 
     useEffect(()=>{
         if(emailC&&firstNameC&&lastNameC&&passwordC&&comfirmPasswordC){
-            callBack();
+            callBack(email,firstName,lastName,password);
         }
     },[emailC,firstNameC ,lastNameC ,passwordC , comfirmPasswordC])
 
@@ -145,20 +146,21 @@ export default function SignUpForms({isPressed,callBack}){
 const styles = StyleSheet.create({
     input:{
         flexDirection:"row",
-        marginTop:rel("H",10),
         borderBottomColor: "#111",
         borderBottomWidth :1,
     },
     inputText:{
         paddingBottom: 0,
-        flex:9
+        flex:9,
+        fontWeight:"400"
     },
     icon:{
         flex:1,
         color:"#555"
     },
     errorMsg:{
-        flexDirection:"column"
+        flexDirection:"column",
+        height:rel("H",33)
     },
     errorText:{
         fontSize:14,

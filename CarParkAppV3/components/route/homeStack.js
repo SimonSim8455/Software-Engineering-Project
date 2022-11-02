@@ -3,8 +3,8 @@ import CarParkDetails from "../CarParkDetails/CarParkDetails";
 import StartParking from "../startParking/StartParking";
 import ParkingOnGoing from "../ParkingOnGoing/parkingOnGoing";
 import Comments from "../CommentsRatings/comments";
-import Home from "../Home/home";
 import React from "react";
+import Home from "../Home/home";
 
 export default function HomeStack(){
 

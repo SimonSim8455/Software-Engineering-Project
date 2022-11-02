@@ -12,7 +12,7 @@ export default function SetTimer({getHrs}){
     const [minutes,setMinutes] = useState(0)
 
     useEffect(()=>{
-        getHrs(hours+minutes/60)
+        getHrs((hours+minutes/60).toFixed(2))
     },[hours,minutes])
      
     const pressedPlusH = () =>{

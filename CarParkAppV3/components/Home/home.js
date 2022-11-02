@@ -9,20 +9,21 @@ import { GestureHandlerRootView } from "react-native-gesture-handler";
 import OriDes from "../data/oriDes";
 import NearByCarPark from "../data/nearByCarPark";
 import FindNearCarPark from "../ReadCSV/findNearCarPark";
+import CarParkAPI from "../data/carParkAPI";
+import ChooseCarPark from "../data/chooseCarPark";
 
 
 const screenHeight = Dimensions.get("screen").height;
 const statusBarHeight = StatusBar.currentHeight;
+
+
 export default function Home({navigation}){
     
     const drawerNavigation = navigation.getParent();
+    const stackNavigation = navigation;
     const [pressed,setPressed] = useState(false)
     const [pressedBot,setPressedBot] = useState(false)
     const [title,setTitle] = useState("Customize your location");
-
-    useEffect(()=>{
-        FindNearCarPark.initialize();
-    },[])
 
     const inputHandler = () => {
         setPressed(!pressed);
@@ -39,10 +40,21 @@ export default function Home({navigation}){
     const getDetails =  () => {
         if(OriDes._destinationDetails != null && OriDes._originalDetails != null){
             FindNearCarPark.setCarParks(5);
+            CarParkAPI.callAPI();
         }
-        botPressed();
     }
     
+    useEffect(()=>{
+        if(FindNearCarPark._carParks && CarParkAPI.avail){
+           CarParkAPI.getAvail2();
+           botPressed();
+        }
+    },[FindNearCarPark._carParks,CarParkAPI.avail])
+
+    useEffect(()=>{
+        botPressed();
+    },[ChooseCarPark.key])
+
     const renderPopUpTop = () =>{
         if(pressed==false){
             return(
@@ -79,6 +91,7 @@ export default function Home({navigation}){
                     <BottomPopUp 
                         onPress= {botPressed} 
                         stackNavigation= {navigation} 
+                        callBackBot = {callBackBot}
                     />
                 </View >
             )
@@ -89,7 +102,7 @@ export default function Home({navigation}){
     return(
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
             <GestureHandlerRootView style={{flex:1}}>
-                <Map />
+                <Map stackNavigation = {stackNavigation}/>
 
                 {renderPopUpTop()} 
                 

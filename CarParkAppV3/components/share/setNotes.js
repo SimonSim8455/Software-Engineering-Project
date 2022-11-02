@@ -1,17 +1,18 @@
 import React,{useEffect, useState} from "react";
 import { StyleSheet ,View, TouchableOpacity,Image ,TextInput,Text} from "react-native";
+import ChooseCarPark from "../data/chooseCarPark";
 import rel from "../share/RelativeRes";
 
 
-export default function SetNotes({imageUri,notes,getImgNoteCallBack,edit}){
+export default function SetNotes({edit}){
 
-    const [image,setImage] = useState(imageUri)
-    const [initNotes,setInitNotes] = useState(notes);
+    const [image,setImage] = useState(ChooseCarPark.imageURI)
+    const [initNotes,setInitNotes] = useState(ChooseCarPark.notes);
     const defaultImage = require('../../assets/Pictures/UploadPhotoIcon.png');
 
     useEffect(()=>{
-        getImgNoteCallBack(image,initNotes)
-    },[image,initNotes])
+        ChooseCarPark.setNotes(initNotes);
+    },[initNotes])
 
     const pressedUploadPhoto = () =>{
         // pickImage();

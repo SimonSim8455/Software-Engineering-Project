@@ -1,4 +1,4 @@
-import React ,{useState} from "react";
+import React ,{useEffect, useState} from "react";
 import {StyleSheet, Text, View ,TouchableWithoutFeedback} from "react-native";
 import rel from "../share/RelativeRes";
 import CustomButton2 from "./customButton2";
@@ -6,9 +6,10 @@ import ListOfCarPark from "./listOfCarPark";
 import DropDown from "./dropDown";
 import NearByCarPark from "../data/nearByCarPark";
 import FindNearCarPark from "../ReadCSV/findNearCarPark";
+import { set } from "react-native-reanimated";
 
 
-export default function bottomPopUp({onPress, stackNavigation, callbackHome}){
+export default function bottomPopUp({onPress, stackNavigation}){
     
     const [Category, setCategory] = useState([
         {name:"Distance", sort:1},
@@ -16,6 +17,11 @@ export default function bottomPopUp({onPress, stackNavigation, callbackHome}){
         {name:"Availibility", sort:0},
         {name:"Recommendation", sort:0}
     ])
+
+    const [aC,setAC] = useState("Distance");
+    const [aSort,setASort] = useState("DC");
+    const [aLH,setLH] =useState(true);
+    const [item,setItem] = useState(SortBy);
 
     const [dropCat, setDropCat] = useState(false)
     const [prevCatIndex, setPrevCatIndex] = useState(0);
@@ -38,8 +44,86 @@ export default function bottomPopUp({onPress, stackNavigation, callbackHome}){
         setCategory(
             filterCat(index)
         )
-        setListOfCarPark([...listOfCarPark]);
     }
+
+    useEffect(()=>{
+        {
+            let c;
+            for(let z = 0;z<Category.length;z++){
+                if(Category[z].sort ==1){
+                    c = Category[z].name
+                    break;
+                }
+            }
+            let s;
+            let lh;
+            for(let z =0;z<SortBy.length;z++){
+                if(SortBy[z].sort==1){
+                    if(SortBy[z].text == "(Departure to Carpark)"){
+                        s = "DC"
+                    }
+                    else{
+                        s="CD"
+                    }
+    
+                    if(SortBy[z].name == "Nearest to Furthest"){
+                        lh = true;
+                    }
+                    else{
+                        lh=false;
+                    }
+                }
+            }
+            setAC(c);
+            setASort(s);
+            setLH(lh);
+        }
+    },[SortBy])
+
+    useEffect(()=>{
+        let c = "Fare"
+        for(let z =0;z<Fare.length;z++){
+            if(Fare[z].sort==1){
+                if(Fare[z].name == "Lowest to Highest"){
+                    s = true
+                }
+                else{
+                    lh = false
+                }
+            }
+        }
+        setAC(c);
+        setLH(lh);
+    },[Fare])
+
+    useEffect(()=>{
+        let c = "Avail"
+        for(let z =0;z<Avail.length;z++){
+            if(Avail[z].sort==1){
+                if(Avail[z].name == "Lowest to Highest"){
+                    s = true
+                }
+                else{
+                    lh = false
+                }
+            }
+        }
+        setAC(c);
+        setLH(lh);
+    },[Avail])
+
+    useEffect(()=>{
+        let a =prevCatIndex;
+        if(a == 0){
+            setItem(SortBy);
+        }
+        else if(a ==1){
+            setItem(Fare);
+        }
+        else if(a==2){
+            setItem(Avail);
+        }
+    },[Category])
 
     const renderCat = () =>{
         if(dropCat == false){
@@ -74,12 +158,49 @@ export default function bottomPopUp({onPress, stackNavigation, callbackHome}){
         return list;
     }
 
-    const setSortHandler = (index) =>{
-        if(index == prevSortIndex) return;
-        setSortBy(
-            filterSort(index)
-        )
-        setListOfCarPark([...listOfCarPark]);
+    const setSortHandler = (title,index) =>{
+        if(title == "SortBy"){
+            if(index == prevSortIndex) return;
+            setSortBy(
+                filterSort(index)
+            )
+        }
+        else if(title =="Fare"){
+            if(index == prevFareIndex) return;
+            setFare(
+                filterFare(index)
+            )
+        }
+        else{
+            if(index == prevAvailIndex) return;
+            setAvail(filterAvail(index))
+        }
+    }
+
+    const [prevFareIndex, setPrevFareIndex] = useState(0)
+    const [Fare,setFare] = useState([
+        {name: "Lowest to Highest",sort:1},
+        {name: "Highest to Lowest",sort:0}
+    ])
+    const filterFare = (index) =>{
+        let list = [...Fare];
+        list[index].sort = 1;
+        list[prevFareIndex].sort=0;
+        setPrevFareIndex(index);
+        return list;
+    }
+
+    const [prevAvailIndex, setPrevAvailIndex] = useState(0)
+    const [Avail,setAvail] = useState([
+        {name: "Lowest to Highest",sort:1},
+        {name: "Highest to Lowest",sort:0}
+    ])
+    const filterAvail = (index) =>{
+        let list = [...Avail];
+        list[index].sort = 1;
+        list[prevAvailIndex].sort=0;
+        setPrevAvailIndex(index);
+        return list;
     }
 
     const renderSort = () =>{
@@ -91,7 +212,7 @@ export default function bottomPopUp({onPress, stackNavigation, callbackHome}){
         else{
             return (
                 <DropDown 
-                    items={SortBy} 
+                    items={item} 
                     title={"Sort by"} 
                     onPress={pressSortHandler} 
                     setCatHandler={setSortHandler}
@@ -118,8 +239,11 @@ export default function bottomPopUp({onPress, stackNavigation, callbackHome}){
 
                     <View style={styles.carParkList}>
                         <ListOfCarPark 
-                            stackNavigation = {stackNavigation} 
+                            stackNavigation = {stackNavigation}
                             listCarPark = {listOfCarPark} 
+                            Category = {aC}
+                            SortBy = {aSort}
+                            LH ={aLH}
                         />
                     </View>
                 </View>

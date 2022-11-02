@@ -1,12 +1,18 @@
 import PopUpTopSmall from "./popUpTopSmall"
-import React from "react";
+import React, {useState,useEffect} from "react";
 import { StyleSheet,View,Text,Image,StatusBar } from "react-native";
 import rel from "../share/RelativeRes"
+import DummyUser from "../data/dummyUsers";
+import UserState from "../data/userState";
 
 const statusBarHeight = StatusBar.currentHeight;
-const dummyImg = require("../../assets/Pictures/dummyMilkPic.png")
-
 export default function FavorHistPopUp({drawerNavigation,title}){
+    const [dummyImg,setDummyImg] = useState(require('../../assets/Pictures/UploadPhotoIcon.png'));
+    useEffect(()=>{
+        if(UserState.user_index != -1){
+            setDummyImg(DummyUser.userArr[UserState.user_index].imageUri);
+        }
+    },[UserState.user_index])
     return(
         <View>
             <View style={styles.popUpTop}>

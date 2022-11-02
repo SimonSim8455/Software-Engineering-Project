@@ -34,7 +34,7 @@ export default function DropDown({items , title, onPress, setCatHandler}){
     const renderDrop2 = () =>{
         let list = items.map( (item,index) =>{
             return(
-                <TouchableWithoutFeedback key={index} onPress = {() =>setCatHandler(index)}>
+                <TouchableWithoutFeedback key={index} onPress = {() =>setCatHandler(title,index)}>
                     <View style={styles.dropDownContent}>
                         <View style={styles.content1}>
                             <View style={styles.content2}>
@@ -53,8 +53,13 @@ export default function DropDown({items , title, onPress, setCatHandler}){
     const render = () =>{
         if(title == "Category"){
             return renderDrop()
+        } else if( title =="SortBy"){
+            return renderDrop2()
+        } else if(title =="Fare"){
+            return renderDrop();
+        } else {
+            return renderDrop();
         }
-        return renderDrop2()
     }
 
     return(

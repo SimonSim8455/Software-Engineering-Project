@@ -1,19 +1,38 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { StyleSheet, View,Text,Image ,TouchableWithoutFeedback} from "react-native";
 import { TextInput } from "react-native-gesture-handler";
+import ChooseCarPark from "../data/chooseCarPark";
+import FindNearCarPark from "../ReadCSV/findNearCarPark";
 import rel from "../share/RelativeRes";
+import UserState from "../data/userState"
+import DummyUser from "../data/dummyUsers"
 
 export default function FeedBacks() {
 
-    const fullStar = "../../assets/Pictures/fullStar.png";
-    const emptyStar = "../../assets/Pictures/emptyStar.png";
+    const fullStar = require("../../assets/Pictures/fullStar.png");
+    const emptyStar = require("../../assets/Pictures/emptyStar.png");
     const cornerIcon = require("../../assets/Pictures/cornerIcon.png")
 
     const [numStar,setNumStar] = useState(0)
+    const [feedBack,setFeedBack] = useState("");
+
+    useEffect(()=>{
+        if(UserState.user_index!=-1){
+            setNumStar(DummyUser.userArr[UserState.user_index].history.rating)
+            setFeedBack(DummyUser.userArr[UserState.user_index].history.feedBack)
+        }
+    },[UserState.user_index])
+    
+    useEffect(()=>{
+        ChooseCarPark.setRating(numStar);
+    },[numStar])
+
+    useEffect(()=>{
+        ChooseCarPark.setFeedBack(feedBack);
+    },[feedBack])
 
     const renderStar = () =>{
         let numFull=0,numEmpty= 0;
-
         numFull = numStar;
     
         numEmpty = 5-numStar;
@@ -24,7 +43,7 @@ export default function FeedBacks() {
             let tmp=i;
             list[i] = (
                 <TouchableWithoutFeedback key={i} onPress={() => setNumStar(tmp+1)}>
-                    <Image source= {require(fullStar)} style = {styles.starsIcon}/>
+                    <Image source= {fullStar} style = {styles.starsIcon}/>
                 </TouchableWithoutFeedback>
             )
         }
@@ -33,7 +52,7 @@ export default function FeedBacks() {
             let tmp = j+i;
             list[j+i] = (
                 <TouchableWithoutFeedback key={j+i} onPress= {() => setNumStar(tmp+1)}>
-                    <Image source= {require(emptyStar)} style = {styles.starsIcon}/>
+                    <Image source= {emptyStar} style = {styles.starsIcon}/>
                 </TouchableWithoutFeedback>
             )
         }
@@ -44,30 +63,30 @@ export default function FeedBacks() {
     return(
         <View style={styles.container}>
             <Text style = {styles.title}>Location:</Text>
-            <Text style={styles.desText}>50 GateWay Jurong LON L L LO S A P OPOSOMPPMP OAPOKAP</Text>
+            <Text style={styles.desText}>{ChooseCarPark.location}</Text>
 
             <View style = {{flexDirection:"row",marginTop:rel("H",15)}}>
                     <Text style = {styles.title}>Date: </Text>
-                    <Text style = {styles.desText}>30/8/2002</Text>
+                    <Text style = {styles.desText}>{ChooseCarPark.date}</Text>
             </View>
 
             <View style = {{flexDirection:"row"}}>
                     <Text style = {styles.title}>Start time: </Text>
-                    <Text style = {styles.desText}>09:40</Text>
+                    <Text style = {styles.desText}>{ChooseCarPark.startTime}</Text>
             </View>
 
             <View style = {{flexDirection:"row"}}>
                     <Text style = {styles.title}>End time: </Text>
-                    <Text style = {styles.desText}>11:40</Text>
+                    <Text style = {styles.desText}>{ChooseCarPark.endTime}</Text>
             </View>
 
             <View style = {{flexDirection:"row"}}>
                     <Text style = {styles.title}>Duration: </Text>
-                    <Text style = {styles.desText}>1.5 hours</Text>
+                    <Text style = {styles.desText}>{ChooseCarPark.duration} hours</Text>
             </View>
 
             <Text style = {[styles.title, {marginTop:rel("H",15)}]}>Total fare:</Text>
-            <Text style={styles.desText}>[car]</Text>
+            <Text style={styles.desText}>[car] {ChooseCarPark.duration} hours x ${ChooseCarPark.carParkFare}/{ChooseCarPark.perHour} hours = ${ChooseCarPark.total_fare}</Text>
 
             <Text style = {[styles.title, {marginTop:rel("H",15)}]}>FeedBack: </Text>
 
@@ -77,6 +96,8 @@ export default function FeedBacks() {
                         multiline
                         placeholder="Leave your comment here..."
                         style={styles.feedBackText}
+                        value={feedBack}
+                        onChangeText={(val)=>setFeedBack(val)}
                     />
                 </View>
 
@@ -119,7 +140,7 @@ const styles = StyleSheet.create({
         height:rel("H",175)
     },
     feedBackText:{
-        
+        paddingVertical:0,
     },
     stars:{
         flexDirection:"row",

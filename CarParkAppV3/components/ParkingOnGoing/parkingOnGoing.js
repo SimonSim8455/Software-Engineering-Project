@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback, useState } from "react";
 import { StyleSheet ,View,Text,ScrollView,TouchableOpacity,TouchableWithoutFeedback,StatusBar} from "react-native";
 import PopUpTop from "../share/popUpTop"
 import TimerDetails from "./timerDetails";
@@ -7,31 +7,52 @@ import Buttons from "./buttons";
 import Ionicons  from 'react-native-vector-icons/Ionicons';
 import OriDes from "../data/oriDes";
 import NearByCarPark from "../data/nearByCarPark";
+import FindNearCarPark from "../ReadCSV/findNearCarPark";
+import ChooseCarPark from "../data/chooseCarPark";
+import CarParkAPI from "../data/carParkAPI";
+import UserState from "../data/userState";
 
 const statusBarHeight = StatusBar.currentHeight;
-export default function ParkingOnGoing({navigation, route}){
+export default function ParkingOnGoing({navigation}){
     const stackNavigation = navigation;
     const drawerNavigation = navigation.getParent();
-    const {name,imageUri,notes} = route.params;
-    
+
+    const [desCar,setDesCar] = useState(false);
+    const [end,setEnd] = useState(false);
+    const [back,setBack] = useState(false);
+    const [end3,setEnd3] = useState(false);
+
     const onSearch = () =>{
-        if(OriDes.getDesDetails() && OriDes.getOriDetails()){
-            NearByCarPark.setCarParks(5);
+        if(OriDes._destinationDetails && OriDes._originalDetails){
+            FindNearCarPark.setCarParks(5);
+            CarParkAPI.callAPI();
         }
         stackNavigation.pop(3)
     }
     const onEdit = () =>{
+        setBack(true)
         stackNavigation.pop();
     }
     const onPressDesCar = () =>{
-        
+        UserState.setLocState(2);
+        stackNavigation.navigate("Home");
     }
     const onPressCarDes = () =>{
-        
+        UserState.setLocState(1);
+        stackNavigation.navigate("Home");
     }
     const onPressDesEnd = () =>{
+        setEnd3(true)
+        UserState.setLocState(3);
         stackNavigation.navigate("Comments")
     }
+
+    const onBack = () =>{
+        setBack(true)
+        stackNavigation.pop()
+    }
+
+
     return(
         <View style={styles.container}>
             <View style={styles.popUpTop}>
@@ -45,10 +66,10 @@ export default function ParkingOnGoing({navigation, route}){
 
             <View style={styles.content}>
                 <View style={styles.content1}>
-                    <TouchableWithoutFeedback onPress={() => stackNavigation.pop()}>
+                    <TouchableWithoutFeedback onPress={onBack}>
                         <Ionicons name="arrow-back" size={30} color="black"/>
                     </TouchableWithoutFeedback>
-                    <Text style={styles.carParkText}>{name}</Text>
+                    <Text style={styles.carParkText}>{ChooseCarPark.name}</Text>
                 </View>
 
                 <TouchableOpacity onPress={onEdit}>
@@ -59,7 +80,7 @@ export default function ParkingOnGoing({navigation, route}){
 
                 <View style={styles.content2}>
                     <ScrollView>
-                        <TimerDetails imageUri={imageUri} notes={notes}/>
+                        <TimerDetails desCar={desCar} end={end} back={back} end3= {end3}/>
                     </ScrollView>
                 </View>
 
