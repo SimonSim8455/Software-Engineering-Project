@@ -5,7 +5,6 @@ import FavorHistPopUp from "../share/favorHistPopUp";
 import { ScrollView } from "react-native-gesture-handler";
 import {Ionicons, MaterialIcons} from "@expo/vector-icons";
 import { useNavigation } from '@react-navigation/native';
-import Faq from "react-faq-component";
 import { List } from 'react-native-paper';
 import PopUpTopSmall from "../share/popUpTopSmall"
 
@@ -129,7 +128,6 @@ const HelpPage = ({navigation}) => {
                 <List.Accordion
                     title="Terms and Conditions"
                     left={props => <List.Icon {...props} icon="file-check" />}
-                    expanded={expanded}
                     onPress={handlePress}>
                         <ScrollView  style={styles.contentText}>
                             <Text style={styles.header}>{data.term1_head}</Text>

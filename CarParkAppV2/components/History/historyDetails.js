@@ -107,7 +107,7 @@ export default function HistoryDetails({navigation}){
             </ScrollView>
         </View>
 
-        <TouchableOpacity style={styles.button}>
+        <TouchableOpacity style={styles.button} onPress={()=>navigationBack.navigate("LandingPage")}>
             <View style={styles.content2}>
                 <Text style={styles.text}>Park Again</Text>
             </View>

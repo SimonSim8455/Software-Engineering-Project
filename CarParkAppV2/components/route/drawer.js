@@ -23,6 +23,7 @@ const RootDrawerNavigator = () => {
                 <Drawer.Screen name="HistoryDetails" component={HistoryDetails} options={{headerShown: false}}/>
                 <Drawer.Screen name="SandBox" component={SandBox} />
                 <Drawer.Screen name="HelpPage" component={HelpPage} options={{headerShown: false}}/>
+                <Drawer.Screen name="LandingPage" component={LandingPage} options={{headerShown: false}}/>
             </Drawer.Navigator>
         </Provider>
     );

@@ -90,7 +90,6 @@ export default function Login({navigation}){
         <View style= {styles.container}>
             <TouchableWithoutFeedback onPress= {Keyboard.dismiss}>
                 <View style = {styles.content}>
-                    <Lottie source={require('../../assets/Pictures/WeLCOME.mp4.lottie.json')} autoPlay loop/>
                     <Lottie style={styles.pic} source={require('../../assets/Pictures/EzPark.mp4.lottie (2).json')} autoPlay loop/>
                     <Text style = {styles.text}>Email address:</Text>
                     <TextInput 
