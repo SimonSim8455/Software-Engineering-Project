@@ -51,6 +51,10 @@ export function DrawerContent(props){
         props.navigation.navigate("SandBox")
     }
 
+    const onPressHelp = () =>{
+        props.navigation.navigate("HelpPage")
+    }
+
     return(
         <View style={styles.container}>
             <View style ={styles.content1}>
@@ -88,6 +92,11 @@ export function DrawerContent(props){
                     <Image source={bookGrayIcon} style = {styles.humanIcon} />
                     <Text style={styles.favoriteText}>SandBox</Text>
                     <Text style={styles.numFavText}>100</Text>
+                </TouchableOpacity>
+
+                <TouchableOpacity style = {styles.home} onPress={onPressHelp}>
+                    <AntDesign name="questioncircleo" size={24} color="grey"/>
+                    <Text style={styles.accountText}>Help</Text>
                 </TouchableOpacity>
             </View>
 
