@@ -1,0 +1,33 @@
+Create Empty React-native project 
+Can see react-native docs
+
+1) 
+Add ANDROD_HOME path in PC 
+( start-> environment -> New user varibles -> add andriod sdk path )
+(usually in C:\Users\dell\AppData\Local\Android\Sdk)
+
+2) Add platform-toosl Path in PC ( same thing -> but x2 click the PATH varibles and add new one)
+C:\Users\dell\AppData\Local\Android\Sdk\platform-tools
+
+
+
+(gradle cant be copied, so basically cannot run in other PC, must create own react-native)
+Here is the things need to changed: 
+Compoenents folder
+babel.config --> add react-reanimated plugin
+package.json --> reference only see what need what dont need
+metro.config.js
+App.js
+AndriodManifest.xml --> Add google API
+
+andriod/.. /Java files
+Just add assets folder and replace all the java files
+
+
+There is a big bug and performance issue 
+(bug --> need to press 2 times )
+(as I cant find out how to read files directly in java, so need to send array to the java files)
+(sending time is after u press Login or signup)
+(text input in search bar is very slow)
+
+
