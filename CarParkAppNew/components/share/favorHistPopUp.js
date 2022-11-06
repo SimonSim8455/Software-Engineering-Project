@@ -22,7 +22,7 @@ export default function FavorHistPopUp({drawerNavigation,title}){
             <View style={styles.content1}>
                 <Image source={dummyImg} style ={styles.backgroundImg} blurRadius={10} />
                 <Image source={dummyImg} style ={styles.profileImg} />
-                <Text style={styles.titlText}>Milk Shake</Text>
+                <Text style={styles.titlText}>Sim2 OL2</Text>
             </View>
         </View>
     )
@@ -46,8 +46,8 @@ const styles = StyleSheet.create({
         position:"absolute",
     },
     profileImg:{
-        width:rel("w",110),
-        height:rel("H",99),
+        width:rel("w",80),
+        height:rel("H",100),
         resizeMode:"cover",
         borderRadius:150/2,
     },

@@ -270,19 +270,19 @@ const styles = StyleSheet.create({
     },
     content1:{
         width:"100%",
-        height:rel("H",158),
+        height:rel("H",165),
         alignItems:"center",
         justifyContent:"center"
     },
     backgroundImg:{
         resizeMode:"cover",
         width:"100%",
-        height:rel("H",158),
+        height:rel("H",164),
         position:"absolute",
     },
     profileImg:{
-        width:rel("w",110),
-        height:rel("H",99),
+        width:rel("w",80),
+        height:rel("H",100),
         resizeMode:"cover",
         borderRadius:150/2,
     },

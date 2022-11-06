@@ -246,9 +246,10 @@ const styles = StyleSheet.create({
         resizeMode:"contain",
     },
     content4:{
-        marginTop:rel("H",15),
+        marginTop:rel("H",10),
         marginLeft:rel("W",75),
-        height: rel("H",27),
+        //marginBottom: rel("H",20),
+        height: rel("H",25),
         width: rel("W",61)
     },
     row:{

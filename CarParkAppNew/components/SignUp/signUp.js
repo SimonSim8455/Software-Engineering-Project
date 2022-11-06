@@ -139,7 +139,7 @@ export default function SignUp({navigation}) {
                             <Text style={styles.tickText}>Allow the app to access your location.</Text>
                         </View>
 
-                        <View style= {styles.tick}>
+                        <View style= {styles.tick2}>
                             <TouchableOpacity onPress = {() => setTick2(!tick2)}> 
                                 {renderTicks2()}
                             </TouchableOpacity>
@@ -167,19 +167,19 @@ const styles = StyleSheet.create({
         paddingTop: 10,
     },
     content1:{
-        height:Rel("H",110)
+        height:Rel("H",100)
     },
     content2:{
         marginTop:rel("H",14)
     },
     pic:{
-        width: Rel("W",125),
+        width: Rel("W",80),
         height: Rel("H",100),
         resizeMode:"cover",
         alignSelf:"center"
     },
     forms:{
-        height:Rel("H",340),
+        height:Rel("H",342),
         weight:Rel("W",316)
     },
     icon:{
@@ -188,14 +188,19 @@ const styles = StyleSheet.create({
     },
     tick:{
         flexDirection: "row",
-        marginTop : rel("H",10),
+        marginTop : rel("H",30),
+        height: Rel("H",24)
+    },
+    tick2:{
+        flexDirection: "row",
+        marginTop : rel("H",5),
         height: Rel("H",24)
     },
     tickText:{
         paddingLeft : 10,
     },
     button:{
-        marginTop:Rel("H",15),
+        marginTop:Rel("H",8),
     },
     checkBox:{
         height:20,

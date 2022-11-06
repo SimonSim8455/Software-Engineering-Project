@@ -22,13 +22,13 @@ export default class DummyReview{
                     imageSRC:require("../../assets/Pictures/personImage.png"),
                     name:"Potato Mash",
                     rating:3,
-                    reviews:"This is so bad, cant cant wait cant wait cant wait to to to try try it it out out out ouch",
+                    reviews:"I like the Car Park here, it is very near to the mall.",
                 },
                 {
                     imageSRC:require("../../assets/Pictures/personImage.png"),
                     name:"Naruto",
                     rating:3,
-                    reviews:"My dad so bad, cant even handle claws",
+                    reviews:"The access to this car park is not so driver friendly TT...",
                 }
             ]
         }
@@ -48,13 +48,13 @@ export default class DummyReview{
                     imageSRC:require("../../assets/Pictures/personImage.png"),
                     name:"Potato Mash",
                     rating:3,
-                    reviews:"This is so bad, cant cant wait cant wait cant wait to to to try try it it out out out ouch",
+                    reviews:"I like the Car Park here, it is very near to the mall.",
                 },
                 {
                     imageSRC:require("../../assets/Pictures/personImage.png"),
                     name:"Naruto",
                     rating:3,
-                    reviews:"My dad so bad, cant even handle claws",
+                    reviews:"The access to this car park is not so driver friendly TT...",
                 }
             ]
         }
@@ -74,13 +74,13 @@ export default class DummyReview{
                     imageSRC:require("../../assets/Pictures/personImage.png"),
                     name:"Potato Mash",
                     rating:3,
-                    reviews:"This is so bad, cant cant wait cant wait cant wait to to to try try it it out out out ouch",
+                    reviews:"I like the Car Park here, it is very near to the mall.",
                 },
                 {
                     imageSRC:require("../../assets/Pictures/personImage.png"),
                     name:"Naruto",
                     rating:3,
-                    reviews:"My dad so bad, cant even handle claws",
+                    reviews:"The access to this car park is not so driver friendly TT...",
                 }
             ]
         }

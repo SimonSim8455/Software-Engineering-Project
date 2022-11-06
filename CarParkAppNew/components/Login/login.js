@@ -136,9 +136,9 @@ const styles = StyleSheet.create({
     pic:{
         alignSelf:"center",
         marginTop:10,
-        marginBottom: 50,
-        width: 300,
-        height: 300,
+        marginBottom: 20,
+        width: 270,
+        height: 270,
     },
     text:{
         fontSize: 15,

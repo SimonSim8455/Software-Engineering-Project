@@ -1,7 +1,7 @@
 
 
 
-const GOOGLE_API_KEY =""; 
+const GOOGLE_API_KEY ="AIzaSyBOQOpATwQ9XOa2CvlonS7-pUUlskV4G2A"; 
 //state DELETE in .xml
 //need add to AndriodManifest.xml --> in andriod/app/src/main/..
 

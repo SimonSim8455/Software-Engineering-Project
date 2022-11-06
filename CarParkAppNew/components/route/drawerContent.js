@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import {View,Text,StyleSheet,Image ,TouchableOpacity} from 'react-native';
 import rel from "../share/RelativeRes";
 import Entypo from 'react-native-vector-icons/Entypo';
+import AntDesign from 'react-native-vector-icons/AntDesign';
 import DummyUser from "../data/dummyUsers";
 import UserState from "../data/userState";
 
@@ -60,9 +61,13 @@ export function DrawerContent(props){
     //     props.navigation.navigate("SandBox")
     // }
 
-    // const onPressHelp = () =>{
-    //     props.navigation.navigate("HelpPage")
-    // }
+    const onPressHelp = () =>{
+        props.navigation.navigate("HelpPage")
+    }
+
+    const onPressLogout = () =>{
+        props.navigation.navigate("Login")
+    }
 
     return(
         <View style={styles.container}>
@@ -71,7 +76,7 @@ export function DrawerContent(props){
                 <View style={styles.content1_1}>
                     <Image source={dummyImg} style ={styles.profileImg} />
                     <Text style={styles.titlText}>{firstName} {lastName}</Text>
-                    <Text style={styles.titlText}>{email}</Text>
+                    <Text style={styles.email}>{email}</Text>
                 </View>
             </View>
             <View style={styles.content2}>
@@ -80,21 +85,31 @@ export function DrawerContent(props){
                     <Text style={styles.accountText}>Home</Text>
                 </TouchableOpacity>
 
-                <TouchableOpacity style = {styles.content4} onPress={onPressAccount}>
-                    <Image source={bankIcon} style = {styles.bankIcon} />
-                    <Text style={styles.accountText}>Account</Text>
+                <TouchableOpacity style = {styles.home} onPress={onPressAccount}>
+                    <Entypo name="user" size={24} color="gray"  />
+                    <Text style={styles.accountText}>My Account</Text>
                 </TouchableOpacity>
 
-                <TouchableOpacity style = {styles.content4} onPress={onPressFavor}>
-                    <Image source={humanGrayIcon} style = {styles.humanIcon} />
-                    <Text style={styles.favoriteText}>My favorites</Text>
+                <TouchableOpacity style = {styles.home} onPress={onPressFavor}>
+                    <Entypo name="heart" size={24} color="gray"  />
+                    <Text style={styles.accountText}>My Favourites</Text>
                     <Text style={styles.numFavText}>{favNum}</Text>
                 </TouchableOpacity>
 
-                <TouchableOpacity style = {styles.content4} onPress={onPressHistory}>
-                    <Image source={bookGrayIcon} style = {styles.humanIcon} />
-                    <Text style={styles.favoriteText}>My history</Text>
+                <TouchableOpacity style = {styles.home} onPress={onPressHistory}>
+                    <Entypo name="box" size={24} color="gray"  />
+                    <Text style={styles.accountText}>My History</Text>
                     <Text style={styles.numFavText}>{histNum}</Text>
+                </TouchableOpacity>
+
+                <TouchableOpacity style = {styles.home} onPress={onPressHelp}>
+                    <Entypo name="info-with-circle" size={24} color="gray"  />
+                    <Text style={styles.accountText}>Help</Text>
+                </TouchableOpacity>
+
+                <TouchableOpacity style = {styles.logout} onPress={onPressLogout}>
+                    <Entypo name="log-out" size={24} color="gray"  />
+                    <Text style={styles.accountText}>Log Out</Text>
                 </TouchableOpacity>
 
                 {/* <TouchableOpacity style = {styles.content4} onPress={onPressSandbox}>
@@ -134,10 +149,10 @@ const styles = StyleSheet.create({
         position:"absolute",
     },
     profileImg:{
-        width:rel("w",64),
-        height:rel("H",59),
+        width:rel("w",62),
+        height:rel("H",72),
         resizeMode:"cover",
-        borderRadius:150/2,
+        borderRadius: 400,
         shadowColor: '#202020',
         shadowOffset: {width: 0, height: 10},
         shadowRadius: 5,
@@ -145,9 +160,21 @@ const styles = StyleSheet.create({
     },
     titlText:{
         color:"white",
-        fontSize:16,
+        fontSize:17,
         marginTop:rel("H",5),
-        fontWeight:"600"
+        fontWeight:"600",
+        textShadowOffset: {width: 1, height: 1},
+        textShadowColor: "#a3a3a3",
+        textShadowRadius: 1,
+    },
+    email:{
+        color:"white",
+        fontSize: 14,
+        marginTop:rel("H",1),
+        fontWeight:"400",
+        textShadowOffset: {width: 1, height: 1},
+        textShadowColor: "#a3a3a3",
+        textShadowRadius: 1,
     },
     bankIcon:{
         height:rel("H",24),
@@ -192,5 +219,12 @@ const styles = StyleSheet.create({
     content4:{
         flexDirection:"row",
         alignItems:"center"
-    }
+    },
+    logout:{
+        marginLeft:rel("W",13),
+        marginTop:rel("H",253),
+        marginBottom:rel("H",10),
+        flexDirection:"row",
+        alignItems:"center"
+    },
 })

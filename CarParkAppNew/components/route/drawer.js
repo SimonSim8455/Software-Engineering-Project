@@ -6,6 +6,7 @@ import SandBox from "../sandbox/sandBox"
 import HistoryStack from "./historyStack";
 import {DrawerContent} from "./drawerContent"
 import FavoriteStack from "./favoriteStack";
+import HelpPage from '../HelpPage/helpPage';
 
 const Drawer = createDrawerNavigator();
 const RootDrawerNavigator = () => {
@@ -15,7 +16,7 @@ const RootDrawerNavigator = () => {
                 <Drawer.Screen name="Account" component={Account} options={{headerShown: false}}/>
                 <Drawer.Screen name="FavoriteStack" component={FavoriteStack} options={{headerShown: false}}/>
                 <Drawer.Screen name="HistoryStack" component={HistoryStack} options={{headerShown: false}}/>
-                <Drawer.Screen name="SandBox" component={SandBox} />
+                <Drawer.Screen name="HelpPage" component={HelpPage} options={{headerShown: false}}/>
             </Drawer.Navigator>
     );
 }

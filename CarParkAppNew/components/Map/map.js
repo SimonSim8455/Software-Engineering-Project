@@ -358,6 +358,7 @@ const styles = StyleSheet.create({
         // top: rel("H",470) -statusBarHeight,
         bottom:rel("H",150),
         height:rel("H",200),
+        marginBottom: 20,
     },
     parkMarker:{
         height:rel("H",20),
